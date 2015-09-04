@@ -374,10 +374,22 @@
         rain: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/WVJQXASGV2.jpg?raw=true",
         snow: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/7F59BFAE51.jpg?raw=true",
         atmosphere: "",
-        clouds: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/C6N5OBSG8G.jpg?raw=true",
+        clouds: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/G0HQJZEF3L.jpg?raw=true",
         extreme: "",
         additional: "",
         default: "",
+    };
+    
+    var getWeatherCondition = function weatherCondition(weatherCodes) {
+       if(weatherCodes !== "clouds") {
+          $(".weather-city").css("color", "black");
+          $(".wi").css("color", "black");
+          $(".weather-temp").css("color", "black");
+          $(".weather-conditions").css("color", "black");
+          $(".weather-wind-title").css("color", "black");
+          
+       }
+       
     };
 
     /* Wind icons not in cdnjs hosted version. Double checked for icons in the source file. 
@@ -468,8 +480,7 @@
        if (windspeed >= 293 && windspeed < 313 ) return windImages["293"];
        if (windspeed >= 313 && windspeed < 336 ) return windImages["313"];     
     }; 
-    
-    
+        
     var KelvinToFarenheit = function(kelvin, conversion) {
         var farenheit = Math.ceil((kelvin - 273.15) * 1.8000 + 32);
         var celsius = Math.ceil(((kelvin - 273.15) * 1.8000 + 32) / (5 / 9));
@@ -490,7 +501,7 @@
             var country = response["city"]["country"];
 
             var currentTemp = KelvinToFarenheit((response["list"][0]["main"]["temp"]), "fahrenheit");
-            //var currentTime = new Date().toISOString();
+     
             var humidity = response["list"][0]["main"]["humidity"];
             var windSpd = response["list"][0]["wind"]["speed"];
             var windDegree = response["list"][0]["wind"]["deg"];
@@ -498,11 +509,11 @@
             var weatherCondition = weatherConditionCodes[weatherID]["meaning"];
             var weatherIcon = weatherConditionCodes[weatherID]["icon"];
             var weatherPicture = weatherPictures[weatherConditionCodes[weatherID]["condition"]];
-            //var windImg = getWindImage(windSpd);
+
             var windText = getWindImage(windSpd)["text"];
             
             
-            $("body").css("background-image", "url(" + weatherPicture + ")");
+       
             $("body").removeClass().addClass("weather-background");
             $(".weather-city").html("<span>" + city + ", " + country + "</span>");
             //$(".weather-time").html("<span>" + currentTime + "</span>");
@@ -511,9 +522,11 @@
             $(".weather-conditions").html("<span>" + weatherCondition + "</span>");
             $(".weather-wind-speed").html(windSpd);
             $(".weather-humidity-percent").html(humidity + "%");
-            //$(".wind-image").removeClass().addClass("wi " + windImg);
+
             $(".weather-wind-direction").html(windText);
             $(".city-id").html(response["city"]["id"]);
+            
+            //console.log(getWeatherCondition(weatherCodes["weatherID"]["condition"]));
 
             console.log(geo);
             console.log(response);
