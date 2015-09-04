@@ -290,6 +290,13 @@ a {
   font-weight: 400;
 }
 
+.wi-wind.towards-0-deg {
+  font-size: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
 .weather-temp {
   font-size: 56px;
   font-size: 3.5rem;
@@ -319,6 +326,14 @@ a {
   font-size: 1.2rem;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.87);
+}
+
+.weather-wind-direction {
+  font-size: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+  text-transform: uppercase;
 }
 
 .card-title {

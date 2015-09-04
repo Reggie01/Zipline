@@ -380,57 +380,96 @@
         default: "",
     };
 
+    /* Wind icons not in cdnjs hosted version. Double checked for icons in the source file. 
+    TODO: Replace with text direction. */
+    
     var windImages = {
         0: {
-            icon: "wi-wind.towards-0-deg"
+            icon: "wi-wind.towards-0-deg",
+            text: "n"
         },
         23: {
-            icon: "wi-wind.towards-23-deg"
+            icon: "wi-wind.towards-23-deg",
+            text: "nne"
         },
         45: {
-            icon: "wi-wind.towards-45-deg"
+            icon: "wi-wind.towards-45-deg",
+            text: "ne"
         },
         68: {
-            icon: "wi-wind.towards-68-deg"
+            icon: "wi-wind.towards-68-deg",
+            text: "ene"
         },
         90: {
-            icon: "wi-wind.towards-90-deg"
+            icon: "wi-wind.towards-90-deg",
+            text: "e"
         },
         113: {
-            icon: "wi-wind.towards-113-deg"
+            icon: "wi-wind.towards-113-deg",
+            text: "ese"
         },
         135: {
-            icon: "wi-wind.towards-135-deg"
+            icon: "wi-wind.towards-135-deg",
+            text: "se"
         },
         158: {
-            icon: "wi-wind.towards-158-deg"
+            icon: "wi-wind.towards-158-deg",
+            text: "sse"
         },
         180: {
-            icon: "wi-wind.towards-180-deg"
+            icon: "wi-wind.towards-180-deg",
+            text: "s"
         },
         203: {
-            icon: "wi-wind.towards-203-deg"
+            icon: "wi-wind.towards-203-deg",
+            text: "ssw"
         },
         225: {
-            icon: "wi-wind.towards-225-deg"
+            icon: "wi-wind.towards-225-deg",
+            text: "sw"
         },
         248: {
-            icon: "wi-wind.towards-248-deg"
+            icon: "wi-wind.towards-248-deg",
+            text: "wsw"
         },
         270: {
-            icon: "wi-wind.towards-270-deg"
+            icon: "wi-wind.towards-270-deg",
+            text: "w"
         },
         293: {
-            icon: "wi-wind.towards-293-deg"
+            icon: "wi-wind.towards-293-deg",
+            text: "wnw"
         },
         313: {
-            icon: "wi-wind.towards-313-deg"
+            icon: "wi-wind.towards-313-deg",
+            text: "nw"
         },
         336: {
-            icon: "wi-wind.towards-336-deg"
+            icon: "wi-wind.towards-336-deg",
+            text: "nnw"
         },
     };
-
+    
+    var getWindImage = function getWindImg(windspeed) {
+       if (windspeed === undefined || windspeed === null ) return windImages[0];
+       if (windspeed >= 0 && windspeed < 23 ) return windImages["0"];
+       if (windspeed >= 23 && windspeed < 45 ) return windImages["23"];
+       if (windspeed >= 45 && windspeed < 68 ) return windImages["45"];
+       if (windspeed >= 68 && windspeed < 90 ) return windImages["68"];
+       if (windspeed >= 90 && windspeed < 113 ) return windImages["90"];
+       if (windspeed >= 113 && windspeed < 135 ) return windImages["113"];
+       if (windspeed >= 135 && windspeed < 158 ) return windImages["135"];
+       if (windspeed >= 158 && windspeed < 180 ) return windImages["158"];
+       if (windspeed >= 180 && windspeed < 203 ) return windImages["180"];
+       if (windspeed >= 203 && windspeed < 225 ) return windImages["203"];
+       if (windspeed >= 225 && windspeed < 248 ) return windImages["225"];
+       if (windspeed >= 248 && windspeed < 270 ) return windImages["248"];
+       if (windspeed >= 270 && windspeed < 293 ) return windImages["270"];
+       if (windspeed >= 293 && windspeed < 313 ) return windImages["293"];
+       if (windspeed >= 313 && windspeed < 336 ) return windImages["313"];     
+    }; 
+    
+    
     var KelvinToFarenheit = function(kelvin, conversion) {
         var farenheit = Math.ceil((kelvin - 273.15) * 1.8000 + 32);
         var celsius = Math.ceil(((kelvin - 273.15) * 1.8000 + 32) / (5 / 9));
@@ -451,7 +490,7 @@
             var country = response["city"]["country"];
 
             var currentTemp = KelvinToFarenheit((response["list"][0]["main"]["temp"]), "fahrenheit");
-            var currentTime = new Date(response["list"][0]["dt"]).toISOString();
+            //var currentTime = new Date().toISOString();
             var humidity = response["list"][0]["main"]["humidity"];
             var windSpd = response["list"][0]["wind"]["speed"];
             var windDegree = response["list"][0]["wind"]["deg"];
@@ -459,15 +498,20 @@
             var weatherCondition = weatherConditionCodes[weatherID]["meaning"];
             var weatherIcon = weatherConditionCodes[weatherID]["icon"];
             var weatherPicture = weatherPictures[weatherConditionCodes[weatherID]["condition"]];
-
+            //var windImg = getWindImage(windSpd);
+            var windText = getWindImage(windSpd)["text"];
+            
+            
             $("body").css("background-image", "url(" + weatherPicture + ")");
             $(".weather-city").html("<span>" + city + ", " + country + "</span>");
-            $(".weather-time").html("<span>" + currentTime + "</span>");
-            $("i").removeClass().addClass("wi " + weatherIcon);
+            //$(".weather-time").html("<span>" + currentTime + "</span>");
+            $(".weather-icon").removeClass().addClass("wi " + weatherIcon);
             $(".weather-temp").html("<span>" + currentTemp + "</span>");
             $(".weather-conditions").html("<span>" + weatherCondition + "</span>");
             $(".weather-wind-speed").html("<span>" + windSpd + "</span>");
             $(".weather-humidity-percent").html("<span>" + humidity + "%</span>");
+            //$(".wind-image").removeClass().addClass("wi " + windImg);
+            $(".weather-wind-direction").html(windText);
 
             console.log(geo);
             console.log(response);
@@ -479,7 +523,7 @@
             console.dir(xhr);
         }).
         always(function(xhr, status) {
-            alert("The request is completed.");
+            console.log("The request is completed.");
         });
     };
 
@@ -504,7 +548,7 @@
 
     var openWeatherURL = "http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&APPID=841fa5fa76dc867d0918d734c2f82f48";
 
-    $("#click").click(function() {
+    
 
         $.ajaxSetup({
             type: 'GET',
@@ -513,5 +557,5 @@
 
         getGeoCoords().then(getWeather)
 
-    });
+    
 });
