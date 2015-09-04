@@ -503,15 +503,17 @@
             
             
             $("body").css("background-image", "url(" + weatherPicture + ")");
+            $("body").removeClass().addClass("weather-background");
             $(".weather-city").html("<span>" + city + ", " + country + "</span>");
             //$(".weather-time").html("<span>" + currentTime + "</span>");
             $(".weather-icon").removeClass().addClass("wi " + weatherIcon);
-            $(".weather-temp").html("<span>" + currentTemp + "</span>");
+            $(".weather-temp").html(currentTemp);
             $(".weather-conditions").html("<span>" + weatherCondition + "</span>");
-            $(".weather-wind-speed").html("<span>" + windSpd + "</span>");
-            $(".weather-humidity-percent").html("<span>" + humidity + "%</span>");
+            $(".weather-wind-speed").html(windSpd);
+            $(".weather-humidity-percent").html(humidity + "%");
             //$(".wind-image").removeClass().addClass("wi " + windImg);
             $(".weather-wind-direction").html(windText);
+            $(".city-id").html(response["city"]["id"]);
 
             console.log(geo);
             console.log(response);

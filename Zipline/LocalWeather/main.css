@@ -252,10 +252,18 @@ a {
 
 /* 4. Weather
 ----------------------------------------*/
+body {
+  
+}
 
 .weather {
   text-align: center;
   height: 100%;
+}
+
+.weather-background {
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .card-image img {
@@ -276,6 +284,7 @@ a {
   color: rgba(0, 0, 0, 0.87);
   line-height: 32px;
   line-height: 2rem;
+  margin-bottom: 10px;
 }
 
 .weather-time {
@@ -286,8 +295,9 @@ a {
   font-size: 56px;
   font-size: 3.5rem;
   color: rgba(0, 0, 0, 0.54);
- 
   font-weight: 400;
+  line-height: 59px;
+  line-height: 3.68rem;
 }
 
 .wi-wind.towards-0-deg {
@@ -303,6 +313,8 @@ a {
   color: rgba(0, 0, 0, 0.54);
   font-family: 'Roboto', 'Helvetica', sans-serif;
   font-weight: 400;
+  line-height: 59px;
+  line-height: 3.68rem;
 }
 
 .weather-conditions {
@@ -334,6 +346,7 @@ a {
   font-weight: 500;
   color: rgba(0, 0, 0, 0.87);
   text-transform: uppercase;
+  margin-right: 5px;
 }
 
 .card-title {
