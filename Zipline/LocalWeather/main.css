@@ -3,7 +3,7 @@
     1. Basic Document Styles
     2. Typography
     3. Button
-    4. Portfolio   
+    4. Weather   
     5. Footer
    
 */
@@ -265,8 +265,60 @@ a {
 .weather-card {
   padding: 24px 16px;
   margin: 0;
-  height: 72px;
   border: 1px solid #000;
+  text-align: left;
+}
+
+.weather-city {
+  font-size: 24px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: 32px;
+  line-height: 2rem;
+}
+
+.weather-time {
+  
+}
+
+.wi {
+  font-size: 56px;
+  font-size: 3.5rem;
+  color: rgba(0, 0, 0, 0.54);
+ 
+  font-weight: 400;
+}
+
+.weather-temp {
+  font-size: 56px;
+  font-size: 3.5rem;
+  color: rgba(0, 0, 0, 0.54);
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+  font-weight: 400;
+}
+
+.weather-conditions {
+  font-size: 24px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: 32px;
+  line-height: 2rem;
+}
+
+.weather-wind-speed {
+  font-size: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.weather-humidity-percent {
+  font-size: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .card-title {
