@@ -372,13 +372,20 @@
         thunderstorm: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/3EPA01FY99.jpg?raw=true",
         drizzle: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/E0A7D9FEC0.jpg?raw=true",
         rain: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/WVJQXASGV2.jpg?raw=true",
-        snow: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/7F59BFAE51.jpg?raw=true",
+        snow: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/0HG4V8BOLU.jpg?raw=true",
         atmosphere: "",
         clouds: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/G0HQJZEF3L.jpg?raw=true",
         extreme: "",
         additional: "",
         default: "",
     };
+    
+    var degrees = function(degree) {
+        if(degree === "" || degree === undefined || degree === "fahrenheit") {
+            return "wi wi-fahrenheit";
+        }
+        return "wi wi-celsius";       
+    }
     
     var getWeatherCondition = function weatherCondition(weatherCodes) {
        if(weatherCodes !== "clouds") {
@@ -481,12 +488,17 @@
        if (windspeed >= 313 && windspeed < 336 ) return windImages["313"];     
     }; 
         
-    var KelvinToFarenheit = function(kelvin, conversion) {
-        var farenheit = Math.ceil((kelvin - 273.15) * 1.8000 + 32);
-        var celsius = Math.ceil(((kelvin - 273.15) * 1.8000 + 32) / (5 / 9));
-        return (conversion === "fahrenheit") ? farenheit : celsius;
+    var tempConverter = {
+       celsiustofahrenheit: function (temp) { return (temp - 32) * (5/9);},
+       fahrenheittocelsius: function(temp) { return temp * (9/5) + 32; },
+       kelvintofahrenheit: function(temp) { return (temp - 273.15) * 1.8 + 32; }
+    }    
+        
+    var KelvinToFarenheit = function(temp, convertTo, convertFrom) {
+        var converterString = (convertFrom+"to"+convertTo).toLowerCase();
+        return Math.ceil(tempConverter[converterString](temp));
     };
-
+    
     function getWeather(geo) {
         var geoLocation = geo.loc.split(",");
         var latitude = geoLocation[0];
@@ -500,7 +512,7 @@
             var city = response["city"]["name"];
             var country = response["city"]["country"];
 
-            var currentTemp = KelvinToFarenheit((response["list"][0]["main"]["temp"]), "fahrenheit");
+            var currentTemp = KelvinToFarenheit((response["list"][0]["main"]["temp"]), "fahrenheit", "kelvin");
      
             var humidity = response["list"][0]["main"]["humidity"];
             var windSpd = response["list"][0]["wind"]["speed"];
@@ -514,9 +526,9 @@
             
             
        
-            $("body").removeClass().addClass("weather-background");
+            //$("body").removeClass().addClass("weather-background");
             $(".weather-city").html("<span>" + city + ", " + country + "</span>");
-            //$(".weather-time").html("<span>" + currentTime + "</span>");
+     
             $(".weather-icon").removeClass().addClass("wi " + weatherIcon);
             $(".weather-temp").html(currentTemp);
             $(".weather-conditions").html("<span>" + weatherCondition + "</span>");
@@ -563,14 +575,34 @@
 
     var openWeatherURL = "http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&APPID=841fa5fa76dc867d0918d734c2f82f48";
 
-    
-
         $.ajaxSetup({
             type: 'GET',
             dataType: " jsonp"
         });
-
-        getGeoCoords().then(getWeather)
-
+    
+      getGeoCoords().then(getWeather)
+        
+        
+        
+     $(".weather-fahrenheit").click(function() {
+         
+         if($("#weather-degree").hasClass("wi-celsius")) {
+            var currentTemp = parseInt($('.weather-temp').text());
+            $('.weather-temp').text("");
+            $('.weather-temp').text(KelvinToFarenheit(currentTemp, "celsius", "fahrenheit"));
+            $('.current-image').removeClass().addClass("current-image wi wi-fahrenheit");
+         }
+         
+      });
+        
+        $(".weather-celsius").click(function() {
+           if($("#weather-degree").hasClass("wi-fahrenheit")) {
+            var currentTemp = parseInt($('.weather-temp').text());
+            $('.weather-temp').text("");
+            $('.weather-temp').text(KelvinToFarenheit(currentTemp, "fahrenheit", "celsius"));
+            $('.current-image').removeClass().addClass("current-image wi wi-celsius");
+           }
+           
+        });
     
 });
