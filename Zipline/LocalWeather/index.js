@@ -399,8 +399,8 @@
        
     };
 
-    /* Wind icons not in cdnjs hosted version. Double checked for icons in the source file. 
-    TODO: Replace with text direction. */
+    /* Wind icons currently not in cdnjs hosted version. Double checked for icons in the source file. Replace text with icons when available.
+    TODO: Replace wind icon with text direction.  */
     
     var windImages = {
         0: {
@@ -519,16 +519,16 @@
             var windDegree = response["list"][0]["wind"]["deg"];
             var weatherID = response["list"][0]["weather"][0]["id"];
             var weatherCondition = weatherConditionCodes[weatherID]["meaning"];
+            weatherCondition = weatherCondition[0].toUpperCase() + weatherCondition.substring(1);
             var weatherIcon = weatherConditionCodes[weatherID]["icon"];
             var weatherPicture = weatherPictures[weatherConditionCodes[weatherID]["condition"]];
 
             var windText = getWindImage(windSpd)["text"];
             
-            
-       
-            //$("body").removeClass().addClass("weather-background");
+                  
+            $("body").removeClass().addClass("weather-background");
             $(".weather-city").html("<span>" + city + ", " + country + "</span>");
-     
+            $("body").css("background-image", "url("+weatherPicture+")");
             $(".weather-icon").removeClass().addClass("wi " + weatherIcon);
             $(".weather-temp").html(currentTemp);
             $(".weather-conditions").html("<span>" + weatherCondition + "</span>");
@@ -537,9 +537,7 @@
 
             $(".weather-wind-direction").html(windText);
             $(".city-id").html(response["city"]["id"]);
-            
-            //console.log(getWeatherCondition(weatherCodes["weatherID"]["condition"]));
-
+           
             console.log(geo);
             console.log(response);
         }).
@@ -581,26 +579,42 @@
         });
     
       getGeoCoords().then(getWeather)
-        
-        
+       
+     var weatherTemp = {};       
         
      $(".weather-fahrenheit").click(function() {
          
          if($("#weather-degree").hasClass("wi-celsius")) {
-            var currentTemp = parseInt($('.weather-temp').text());
+            
+            //var currentTemp = parseInt($('.weather-temp').text());
             $('.weather-temp').text("");
-            $('.weather-temp').text(KelvinToFarenheit(currentTemp, "celsius", "fahrenheit"));
+            //$('.weather-temp').text(KelvinToFarenheit(currentTemp, "celsius", "fahrenheit"));
+            //$('.weather-temp').text(currentTemp);
+            $('.weather-temp').text(weatherTemp["fahrenheit"]);
             $('.current-image').removeClass().addClass("current-image wi wi-fahrenheit");
+            
+            $(".weather-celsius").removeClass("green");
+            $(this).addClass("green");
          }
          
       });
         
         $(".weather-celsius").click(function() {
            if($("#weather-degree").hasClass("wi-fahrenheit")) {
-            var currentTemp = parseInt($('.weather-temp').text());
+            
+            if(weatherTemp["fahrenheit"] === undefined || weatherTemp["fahrenheit"] === "") {
+             weatherTemp["fahrenheit"] = parseInt($('.weather-temp').text());
+            }
+            var currentTemp = weatherTemp["fahrenheit"];
             $('.weather-temp').text("");
-            $('.weather-temp').text(KelvinToFarenheit(currentTemp, "fahrenheit", "celsius"));
+            if(weatherTemp["celsius"] === undefined || weatherTemp["celsius"] === "") {
+               weatherTemp["celsius"] = KelvinToFarenheit(currentTemp, "fahrenheit", "celsius")
+            }
+            $('.weather-temp').text(weatherTemp["celsius"]);
             $('.current-image').removeClass().addClass("current-image wi wi-celsius");
+            
+            $(".weather-fahrenheit").removeClass("green");
+            $(this).addClass("green");
            }
            
         });

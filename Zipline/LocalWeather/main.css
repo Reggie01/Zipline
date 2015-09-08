@@ -253,7 +253,6 @@ a {
 /* 4. Weather
 ----------------------------------------*/
 body {
-  background-image: url("https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/0HG4V8BOLU.jpg?raw=true"); 
 
 }
 
@@ -272,11 +271,29 @@ body {
   margin: auto;
 }
 
+.weather-wind {
+  width: 50%;
+  float: left;
+}
+
+.weather-humidity {
+  width: 50%;
+  float: left;
+}
+
+.button-container {
+  margin: 0 auto;
+  width: 300px;
+}
+
 .weather-card {
   padding: 24px 16px;
-  margin: 0;
+  margin: 0 auto;
  //border: 1px solid #000;
   text-align: left;
+  background-color: #fff;
+  width: 300px;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
 }
 
 .weather-city {
@@ -362,6 +379,10 @@ body {
   display: block;
 }
 
+.green {
+  background-color: #69F0AE;
+}
+
 /* 5. Footer
 ---------------------------------------*/
 footer {
@@ -398,5 +419,9 @@ footer ul li a:hover
 @media (max-width: 770px) { 
      .weather-card {
           text-align: center;
+     }
+     
+     .btn{
+       width: 125px;
      }
 }
