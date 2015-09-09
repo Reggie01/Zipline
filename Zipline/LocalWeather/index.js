@@ -536,8 +536,7 @@
             $(".weather-humidity-percent").html(humidity + "%");
 
             $(".weather-wind-direction").html(windText);
-            $(".city-id").html(response["city"]["id"]);
-           
+                       
             console.log(geo);
             console.log(response);
         }).
