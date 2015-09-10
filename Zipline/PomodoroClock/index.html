@@ -1,48 +1,63 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-         <meta charset="utf-8" />
-         <meta name="viewport" content="width=device-width, initial-scale=1">
-         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="main.css">
-        <title>Pomodoro Clock</title>
-    </head>
-    <body>
-        <h2>Pomodoro Clock</h2>
-        <div class="row">
-          <div class="col-md-4"></div>
-          <div class="time-length-container col-md-2">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <link rel="stylesheet" href="main.css">
+      <title>Pomodoro Clock</title>
+   </head>
+   <body>
+      <div class="row">
+         <div class="col-md-4"></div>
+         <div class="col-md-4">
+            <h2 class="title">
+            Pomodoro Clock</h1>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-4"></div>
+         <div class="time-length-container col-md-2">
             <div class="time-text">Break Length</div>
             <div class="time-container">
-              <span class="time-minus-symbol">-</span>
-              <span class="time-break-numeral">5</span>
-              <span class="time-plus-symbol">+</span>
+               <span class="time-break-minus">-</span>
+               <span class="time-break-numeral">5</span>
+               <span class="time-break-plus">+</span>
             </div>
-          </div>
-          <div class="time-length-container col-md-2">
-            <div class="time-text">Break Length</div>
+         </div>
+         <div class="time-length-container col-md-2">
+            <div class="time-text">Session Length</div>
             <div class="time-container">
-              <span class="time-minus-symbol">-</span>
-              <span class="time-session-numeral">5</span>
-              <span class="time-plus-symbol">+</span>
+               <span class="time-session-minus">-</span>
+               <span class="time-session-numeral">5</span>
+               <span class="time-session-plus">+</span>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="pomodoro container">
-              <div class="pomodoro-text">Session</div>
-              <div class="pomodoro-time">
-                <span class="pomodoro-time-minute">2</span>
-                <span class="pomodoro-colon">:</span>
-                <span class="pomodoro-time-seconds">00</span>
-              </div>
-          </div>
-        </div>
-        <div >
-          <div id="SomeElementYouWantToAnimate"></div>
-        </div>
-        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="index.js"></script>
-    </body>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-4"></div>
+         <div class="container col-md-4">
+            <div class="pomodoro">
+               <div class="pomodoro-text">Session</div>
+               <div class="pomodoro-time">
+                  <span class="pomodoro-time-minute">5</span>
+                  <span class="pomodoro-colon">:</span>
+                  <span class="pomodoro-time-seconds">00</span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <audio src="electronic_store_bell_two_rings.mp3" preload="auto" ></audio>
+      <footer>
+         <div class="container">
+            <div class="footer-bottom-section">
+                &copy; 2015 Reggie Sanders. All Rights Reserved.
+            </div>
+            <span>Sounds Effects from <a href="http://www.freesfx.co.uk" target="_blank">http://www.freesfx.co.uk</a></a></span>
+         </div>
+      </footer>
+      <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+      <script src="index.js"></script>
+   </body>
 </html>
