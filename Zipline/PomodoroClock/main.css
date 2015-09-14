@@ -311,19 +311,26 @@ a {
 
 .pomodoro-text {
     margin-top: 67px;
-    
+    z-index: 2;
 }
 
 .pomodoro-time {
     margin-top: 134px;
     margin-bottom: 67px;
+    z-index: 2;
+}
+
+canvas {
+    z-index: -1;
+    margin: 0 auto;
+    display: block;
 }
 
 /* 5. Footer
 ---------------------------------------*/
 footer {
   background-color: #fafafa;
-  position: absolute;
+  /*position: absolute; */
   bottom: 0;
   width: 100%;
   

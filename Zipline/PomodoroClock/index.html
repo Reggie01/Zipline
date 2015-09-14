@@ -30,22 +30,31 @@
             <div class="time-text">Session Length</div>
             <div class="time-container">
                <span class="time-session-minus">-</span>
-               <span class="time-session-numeral">5</span>
+               <span class="time-session-numeral">25</span>
                <span class="time-session-plus">+</span>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-4 col-sm-4 "></div>
+         <div class="container col-md-4 col-sm-12 col-xs-12">
+            <canvas width="500" height="500" id="canvas"></canvas>
+            <div class="pomodoro" id="pomodoro">
+               <div class="pomodoro-text">Session</div>
+               <div class="pomodoro-time">
+                  <span class="pomodoro-time-minute">25</span>
+                  <span class="pomodoro-colon">:</span>
+                  <span class="pomodoro-time-seconds">00</span>
+               </div>
             </div>
          </div>
       </div>
       <div class="row">
          <div class="col-md-4"></div>
          <div class="container col-md-4">
-            <div class="pomodoro">
-               <div class="pomodoro-text">Session</div>
-               <div class="pomodoro-time">
-                  <span class="pomodoro-time-minute">5</span>
-                  <span class="pomodoro-colon">:</span>
-                  <span class="pomodoro-time-seconds">00</span>
-               </div>
-            </div>
+            <button class="btn btn-primary start">Start</button>
+            <button class="btn btn-primary stop">Stop</button>
+            <button class="btn btn-primary reset">Reset</button>
          </div>
       </div>
       <audio src="electronic_store_bell_two_rings.mp3" preload="auto" ></audio>
