@@ -11,34 +11,34 @@
    </head>
    <body>
       <div class="row">
-         <div class="col-md-4"></div>
-         <div class="col-md-4">
+         
+         <div class="col-md-12 col-sm-12 col-xs-12">
             <h2 class="title">
             Pomodoro Clock</h1>
          </div>
       </div>
       <div class="row">
          <div class="col-md-4"></div>
-         <div class="time-length-container col-md-2">
+         <div class="time-length-container col-md-2 col-sm-6 col-xs-6">
             <div class="time-text">Break Length</div>
             <div class="time-container">
-               <span class="time-break-minus">-</span>
+               <span class="time-break-minus"><i class="fa fa-minus"></i></span>
                <span class="time-break-numeral">5</span>
-               <span class="time-break-plus">+</span>
+               <span class="time-break-plus"><i class="fa fa-plus"></i></span>
             </div>
          </div>
-         <div class="time-length-container col-md-2">
+         <div class="time-length-container col-md-2 col-sm-6 col-xs-6">
             <div class="time-text">Session Length</div>
             <div class="time-container">
-               <span class="time-session-minus">-</span>
+               <span class="time-session-minus"><i class="fa fa-minus-circle"></i></span>
                <span class="time-session-numeral">25</span>
-               <span class="time-session-plus">+</span>
+               <span class="time-session-plus"><i class="fa fa-plus-circle"></i></span>
             </div>
          </div>
       </div>
       <div class="row">
-         <div class="col-md-4 col-sm-4 "></div>
-         <div class="container col-md-4 col-sm-12 col-xs-12">
+         <div class="col-md-4 col-sm-4"></div>
+         <div class="container col-md-4 col-sm-4 col-xs-12">
             <canvas width="500" height="500" id="canvas"></canvas>
             <div class="pomodoro" id="pomodoro">
                <div class="pomodoro-text">Session</div>
@@ -51,8 +51,8 @@
          </div>
       </div>
       <div class="row">
-         <div class="col-md-4"></div>
-         <div class="container col-md-4">
+         <div class="col-md-4 col-sm-4"></div>
+         <div class="container col-md-4 col-sm-6 col-xs-12">
             <div class="col-md-4 col-sm-4 col-xs-4"><button class="btn btn-primary start"><i class="fa fa-play"></i>Start</button></div>
             <div class="col-md-4 col-sm-4 col-xs-4"><button class="btn btn-primary stop"><i class="fa fa-pause"></i>Pause</button></div>
             <div class="col-md-4 col-sm-4 col-xs-4"><button class="btn btn-primary reset"><i class="fa fa-undo"></i>Reset</button></div>

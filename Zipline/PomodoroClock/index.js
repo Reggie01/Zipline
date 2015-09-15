@@ -3,70 +3,80 @@ $(document).ready(function() {
 
     var elemMinutes = document.getElementsByClassName("pomodoro-time-minute")[0];
     var elemSeconds = document.getElementsByClassName("pomodoro-time-seconds")[0];
-    var totalSeconds = +elemSeconds.textContent;
-    var totalMinutes = +elemMinutes.textContent;
+    
+    // Timer Variables
+    var startingMinutes = 25;
+    var startingSeconds = 0;
+    var canvasMinutes = startingMinutes;
+    var canvasSeconds = startingSeconds;
+    var breakOrSession = "Session";
+    var amt = 0;
+    
     var v = document.getElementsByTagName("audio")[0];
+       
+    function updateTimer() {
+          
+       if(canvasMinutes > 0 && canvasSeconds === 0){ 
+       
+           canvasSeconds = 59;           
+           --canvasMinutes;     
+           
+       } else {
+           if(canvasSeconds === 0 && canvasMinutes <= 0){
+               console.log("The end");
+               
+               if(breakOrSession === "Session") {
+                   
+                    breakOrSession = "Break!";
+                    canvasMinutes = parseInt(+$(".time-break-numeral").text());
+                    canvasSeconds = 0;
+                    v.play();
+                    amt = 0;
+                                                           
+               }
+               else if(breakOrSession === "Break!") {
+                    breakOrSession = "Session";
+                    canvasMinutes = parseInt(+$(".time-session-numeral").text());
+                    canvasSeconds = 0;
+                    v.play();
+                    amt = 0;                    
+               }
+               
+           } else {                
+                --canvasSeconds;                                      
+           }                                  
+       }       
+    }    
     
     function addZeros(match) {
+        if(typeof match !== "string"){
+         match = "" + match;
+        }
         if(match.length < 2){
           return "0" + match;
         }
         return match;
     };
-    
-    function calculateSeconds() {
-          
-       if(totalMinutes > 0 && +elemSeconds.textContent === 0){ 
-           totalSeconds = 59;
-           elemSeconds.textContent = (totalSeconds).toString(); 
-           --totalMinutes;
-           elemMinutes.textContent = (totalMinutes).toString();
-                                                  
-       } else {
-           if(+elemSeconds.textContent === 0 && totalMinutes <= 0){
-               console.log("The end");
-               
-               if($(".pomodoro-text").text() === "Session") {
-                    $(".pomodoro-text").text("");
-                    $(".pomodoro-text").text("Break!");
-                    $(".pomodoro-time-minute").text($(".time-break-numeral").text());
-                    totalMinutes = parseInt(+$(".pomodoro-time-minute").text());
-                    console.log(document.getElementsByTagName("audio"));                   
-                    v.play();
-               }
-               else if($(".pomodoro-text").text() === "Break!") {
-                    $(".pomodoro-text").text("Session");
-                    $(".pomodoro-time-minute").text($(".time-break-numeral").text());
-                    totalMinutes = parseInt(+$(".pomodoro-time-minute").text());
-                    v.play();
-               }
-               
-           } else {                
-                elemSeconds.textContent = addZeros((--totalSeconds).toString());               
-           }                                  
-       }       
-    }
-    
-    
-    // Draw variables
+       
+    // Canvas clock variables
     var pomodoro = document.getElementById("pomodoro");
     var pomodoroWidth = pomodoro.getClientRects()[0].width;
     var pomodoroHeight = pomodoro.getClientRects()[0].height;
-    
-    
+        
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
-    canvas.width = pomodoroWidth *.95;
-    canvas.height = pomodoroHeight * .95;
+    canvas.width = pomodoroWidth;
+    canvas.height = pomodoroHeight;
     var centerX = canvas.width  * .5;
     var centerY = canvas.height * .5;
     var width = canvas.width;
     var height = canvas.height;
-    var radius = (width -10) * .5;
+
+    var radius = (height /2)  * .90;
     var full = radius * 2;
-    var amt = 0;
+
     
-    function draw() {
+    function drawCanvasClock() {
        context.clearRect(0, 0, width, height);
        context.save();
        context.beginPath();
@@ -79,13 +89,14 @@ $(document).ready(function() {
        context.fill();
        
        context.beginPath();
-       context.font = 'italic 30pt Calibri';
-       context.fillStyle = "#ccc";
-       context.fillText('Session', centerX - 55, centerY - radius * .5);
+       context.font = 'italic 30pt Roboto';
+       context.fillStyle = "rgba(0, 0, 0, 0.54)";
+       context.fillText(breakOrSession, centerX - 55, centerY - radius * .5);
        
        context.beginPath();
-       context.font = "italic 30pt Calibri";
-       context.fillText($(".pomodoro-time-minute").text() + " : " + $(".pomodoro-time-seconds").text(), centerX - 55, centerY + radius * .5);
+       context.font = "30pt Roboto";
+       context.fillStyle = "rgba(0, 0, 0, 0.54)";
+       context.fillText(canvasMinutes + " : " + addZeros(canvasSeconds), centerX - 55, centerY + radius * .5);
        
        context.restore();
        context.beginPath();
@@ -97,44 +108,48 @@ $(document).ready(function() {
        if(amt > full) amt = 0;
     }
     
-    draw();
+    function drawhtmlClock() {
+               
+           elemSeconds.textContent = addZeros((canvasSeconds).toString()); 
+           elemMinutes.textContent = (canvasMinutes).toString();
+           $(".pomodoro-text").text(breakOrSession);                                      
+       
+    } 
+    
+    drawCanvasClock();
     
     function step(timestamp) {        
-       calculateSeconds();           
-       draw();
+       updateTimer();           
+       drawCanvasClock();
+       drawhtmlClock();
     }
    
-   var id = 0;
-  
-   $(".pomodoro").click(function() {    
-      if(id) {
-           clearInterval(id);
-           id = 0;
-      } else {
-           id = setInterval(function() { 
-   
-           step(); }, 1000);
-      }
-      
-   });
+   var setIntervalID = 0;
    
    $(".time-session-minus").click(function() {
         var currentTime = parseInt($(".time-session-numeral").text());
         if(currentTime - 1 > 0){
          $(".time-session-numeral").text(currentTime - 1);
-         $(".pomodoro-time-minute").text($(".time-session-numeral").text());
-         totalMinutes =  $(".pomodoro-time-minute").text();
+        
+         canvasMinutes = +$(".time-session-numeral").text();
+         amt = 0;
+         drawCanvasClock();
+         drawhtmlClock();
+
         }        
    });
    
    $(".time-session-plus").click(function() {
         var currentTime = parseInt($(".time-session-numeral").text());
         $(".time-session-numeral").text(currentTime + 1);
-        $(".pomodoro-time-minute").text($(".time-session-numeral").text());
-        totalMinutes =  $(".pomodoro-time-minute").text(); 
+        
+        canvasMinutes = +$(".time-session-numeral").text();
+        amt = 0;
+        drawCanvasClock();       
+        drawhtmlClock();
+
    });
-   
-   
+    
    $(".time-break-minus").click(function() {
         var currentTime = parseInt($(".time-break-numeral").text());
         if(currentTime - 1 >= 0){
@@ -149,18 +164,29 @@ $(document).ready(function() {
    
    $(".reset").click(function() {
         $(".time-session-numeral").text("25");
-        $(".pomodoro-time-minute").text("25");
-        $(".pomodoro-time-seconds").text("00"); 
-        totalMinutes =  $(".pomodoro-time-minute").text(); 
-        draw();
+       
+        //canvas 
+        canvasMinutes = 25;
+        canvasSeconds = 0;
+        breakOrSession = "Session";
+        
+        amt = 0;
+        drawCanvasClock();
+        drawhtmlClock();
+        clearInterval(setIntervalID);
+        setIntervalID = 0;
    });
    
    $(".stop").click(function() {
-        clearInterval(id);
-        id = 0;
+        clearInterval(setIntervalID);
+        setIntervalID = 0;
    });
    
    $(".start").click(function() {
-        id = setInterval(function() { step(); }, 1000);
+        
+        if(setIntervalID === 0) {
+            setIntervalID = setInterval(function() { step(); }, 1000);
+        }
+        
    });
 });
