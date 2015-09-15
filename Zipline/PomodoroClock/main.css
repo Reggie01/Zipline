@@ -104,7 +104,7 @@ nav {
 }
 
 i {
-
+  color: #fff;
   padding: 0 5px;
 }
 
@@ -205,6 +205,7 @@ a {
   border-radius: none;
   letter-spacing: 1px;
   border-radius: 0;
+  /* width: 30%; */
   min-width: 64px;
   min-height: 36px;
   padding: 0 8px;
@@ -363,6 +364,6 @@ footer ul li a:hover
 
 /* 6. Media Queries
 ------------------------------ */
-@media (max-width: 770px) { 
-     
+@media (max-width: 560px) { 
+
 }

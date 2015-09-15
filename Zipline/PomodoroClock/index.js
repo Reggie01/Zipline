@@ -152,6 +152,7 @@ $(document).ready(function() {
         $(".pomodoro-time-minute").text("25");
         $(".pomodoro-time-seconds").text("00"); 
         totalMinutes =  $(".pomodoro-time-minute").text(); 
+        draw();
    });
    
    $(".stop").click(function() {
