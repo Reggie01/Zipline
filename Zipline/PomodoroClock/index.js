@@ -60,7 +60,7 @@ $(document).ready(function() {
        
     // Canvas clock variables
             
-    var canvas = document.getElementById("canvas");
+    /* var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
     var centerX = canvas.width  * .5;
@@ -69,8 +69,11 @@ $(document).ready(function() {
     var height = canvas.height;
 
     var radius = (height /2)  * .9;
-    var full = radius * 2;
+    var full = radius * 2; */
     
+ /* http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas   
+ Formula to fix blurriness of canvas drawings in mobile devices */
+ 
     var PIXEL_RATIO = (function () {
         var ctx = document.createElement("canvas").getContext("2d"),
              dpr = window.devicePixelRatio || 1,
@@ -95,13 +98,23 @@ $(document).ready(function() {
         return can;
     }
     
-    var myCanvas = createHiDPICanvas(500, 500);
-    var context2 = myCanvas.getContext("2d");
-    console.log(myCanvas);
-    $(".cutom_canvas").append(myCanvas);
+     var canvasWidth = 350;
+    var canvasHeight = 350;
+    
+    var canvas = createHiDPICanvas(canvasWidth, canvasHeight);
+    
+    var centerX = canvasWidth  * .5;
+    var centerY = canvasHeight * .5;
+   
+    var radius = (canvasHeight /2)  * .9;
+    var full = radius * 2;
+    
+    var context = canvas.getContext("2d");
+    console.log(context);
+    $(".custom_canvas").append(canvas);
     
     function drawCanvasClock() {
-       context.clearRect(0, 0, width, height);
+       context.clearRect(0, 0, canvasWidth, canvasHeight);
        context.save();
        context.beginPath();
        context.arc(centerX, centerY, radius - 5, 0, 2 * Math.PI);
@@ -127,33 +140,6 @@ $(document).ready(function() {
        context.arc(centerX, centerY, radius, 0, 2*Math.PI);
        context.strokeStyle = "#FF3D00";
        context.stroke();
-       
-       context2.clearRect(0, 0, width, height);
-       context2.save();
-       context2.beginPath();
-       context2.arc(centerX, centerY, radius - 5, 0, 2 * Math.PI);
-       context2.clip();
-       
-       context2.beginPath();
-       context2.fillStyle = "#FF6E40";
-       context2.fillRect(centerX - radius, centerY + radius, radius * 2, -amt);
-       context2.fill();
-       
-       context2.beginPath();
-       context2.font = 'italic 30pt Roboto';
-       context2.fillStyle = "rgba(0, 0, 0, 0.54)";
-       context2.fillText(breakOrSession, centerX - 55, centerY - radius * .5);
-       
-       context2.beginPath();
-       context2.font = "30pt Roboto";
-       context2.fillStyle = "rgba(0, 0, 0, 0.54)";
-       context2.fillText(canvasMinutes + " : " + addZeros(canvasSeconds), centerX - 55, centerY + radius * .5);
-       
-       context2.restore();
-       context2.beginPath();
-       context2.arc(centerX, centerY, radius, 0, 2*Math.PI);
-       context2.strokeStyle = "#FF3D00";
-       context2.stroke();
        
        amt += 10;
        if(amt > full) amt = 0;
