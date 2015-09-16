@@ -321,8 +321,12 @@ a {
 }
 
 canvas {
-    z-index: -1;
     margin: 0 auto;
+}
+
+.canvas1 {
+    z-index: -1;
+   /*  margin: 0 auto; */
     display: block;
 }
 
@@ -347,7 +351,7 @@ canvas {
 ---------------------------------------*/
 footer {
   background-color: #fafafa;
-  /*position: absolute; */
+  position: absolute; 
   bottom: 0;
   width: 100%;
   
@@ -380,6 +384,26 @@ footer ul li a:hover
 
 /* 6. Media Queries
 ------------------------------ */
-@media (max-width: 560px) { 
+@media (max-width: 1258px) { 
+    .pomodoro {
+        width: 350px;
+        height: 350px;        
+    }
+    
+    .pomodoro-time {
+        margin-top: 75px;
+        margin-bottom: 0px;
+    }
+    
+    .canvas1 {
+        width: 350px;
+        height: 350px;
+    }
+}
 
+@media (min-width: 1258) {
+    .canvas1 {
+        width: 400px;
+        height: 400px;
+    }
 }

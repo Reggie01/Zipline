@@ -59,22 +59,46 @@ $(document).ready(function() {
     };
        
     // Canvas clock variables
-    var pomodoro = document.getElementById("pomodoro");
-    var pomodoroWidth = pomodoro.getClientRects()[0].width;
-    var pomodoroHeight = pomodoro.getClientRects()[0].height;
-        
+            
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
-    canvas.width = pomodoroWidth;
-    canvas.height = pomodoroHeight;
+
     var centerX = canvas.width  * .5;
     var centerY = canvas.height * .5;
     var width = canvas.width;
     var height = canvas.height;
 
-    var radius = (height /2)  * .90;
+    var radius = (height /2)  * .9;
     var full = radius * 2;
+    
+    var PIXEL_RATIO = (function () {
+        var ctx = document.createElement("canvas").getContext("2d"),
+             dpr = window.devicePixelRatio || 1,
+             bsr = ctx.webkitBackingStorePixelRatio ||
+                      ctx.mozBackingStorePixelRatio ||
+                      ctx.msBackingStorePixelRatio ||
+                      ctx.oBackingStorePixelRatio ||
+                      ctx.backingStorePixelRatio || 1;
 
+        return dpr / bsr;
+    })();
+
+
+    createHiDPICanvas = function(w, h, ratio) {
+        if (!ratio) { ratio = PIXEL_RATIO; }
+        var can = document.createElement("canvas");
+        can.width = w * ratio;
+        can.height = h * ratio;
+        can.style.width = w + "px";
+        can.style.height = h + "px";
+        can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+        return can;
+    }
+    
+    var myCanvas = createHiDPICanvas(500, 500);
+    var context2 = myCanvas.getContext("2d");
+    console.log(myCanvas);
+    $(".cutom_canvas").append(myCanvas);
     
     function drawCanvasClock() {
        context.clearRect(0, 0, width, height);
@@ -103,6 +127,33 @@ $(document).ready(function() {
        context.arc(centerX, centerY, radius, 0, 2*Math.PI);
        context.strokeStyle = "#FF3D00";
        context.stroke();
+       
+       context2.clearRect(0, 0, width, height);
+       context2.save();
+       context2.beginPath();
+       context2.arc(centerX, centerY, radius - 5, 0, 2 * Math.PI);
+       context2.clip();
+       
+       context2.beginPath();
+       context2.fillStyle = "#FF6E40";
+       context2.fillRect(centerX - radius, centerY + radius, radius * 2, -amt);
+       context2.fill();
+       
+       context2.beginPath();
+       context2.font = 'italic 30pt Roboto';
+       context2.fillStyle = "rgba(0, 0, 0, 0.54)";
+       context2.fillText(breakOrSession, centerX - 55, centerY - radius * .5);
+       
+       context2.beginPath();
+       context2.font = "30pt Roboto";
+       context2.fillStyle = "rgba(0, 0, 0, 0.54)";
+       context2.fillText(canvasMinutes + " : " + addZeros(canvasSeconds), centerX - 55, centerY + radius * .5);
+       
+       context2.restore();
+       context2.beginPath();
+       context2.arc(centerX, centerY, radius, 0, 2*Math.PI);
+       context2.strokeStyle = "#FF3D00";
+       context2.stroke();
        
        amt += 10;
        if(amt > full) amt = 0;
