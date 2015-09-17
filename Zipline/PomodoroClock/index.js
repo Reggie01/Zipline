@@ -1,5 +1,5 @@
 ﻿/* Sound effects from http://www.freesfx.co.uk */
-$(document).ready(function() {
+$(document).ready(function () {
 
     var elemMinutes = document.getElementsByClassName("pomodoro-time-minute")[0];
     var elemSeconds = document.getElementsByClassName("pomodoro-time-seconds")[0];
@@ -45,7 +45,7 @@ $(document).ready(function() {
                 --canvasSeconds;
             }
         }
-    }
+    };
 
     function addZeros(match) {
         if (typeof match !== "string") {
@@ -57,14 +57,13 @@ $(document).ready(function() {
         return match;
     };
 
-
-    /* http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas   
+    /* http://stackoverflow.com/questions/15661339/how-do-i-fix-blurry-text-in-my-html5-canvas
     Formula to fix blurriness of canvas drawings in mobile devices */
 
-    var PIXEL_RATIO = (function() {
+    var PIXEL_RATIO = (function () {
         var ctx = document.createElement("canvas").getContext("2d"),
-            dpr = window.devicePixelRatio || 1,
-            bsr = ctx.webkitBackingStorePixelRatio ||
+        dpr = window.devicePixelRatio || 1,
+        bsr = ctx.webkitBackingStorePixelRatio ||
             ctx.mozBackingStorePixelRatio ||
             ctx.msBackingStorePixelRatio ||
             ctx.oBackingStorePixelRatio ||
@@ -73,8 +72,7 @@ $(document).ready(function() {
         return dpr / bsr;
     })();
 
-
-    createHiDPICanvas = function(w, h, ratio) {
+    createHiDPICanvas = function (w, h, ratio) {
         if (!ratio) {
             ratio = PIXEL_RATIO;
         }
@@ -85,22 +83,21 @@ $(document).ready(function() {
         can.style.height = h + "px";
         can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
         return can;
-    }
+    };
 
-    var canvasWidth = 350;
-    var canvasHeight = 350;
+    var customCanvas = document.getElementsByClassName('custom_canvas')[0];
+    var canvasWidth = customCanvas.getClientRects()[0].width; //350;
+    var canvasHeight = customCanvas.getClientRects()[0].width; //350;
 
     var canvas = createHiDPICanvas(canvasWidth, canvasHeight);
 
     var centerX = canvasWidth * .5;
     var centerY = canvasHeight * .5;
-
     var radius = (canvasHeight / 2) * .9;
     var full = radius * 2;
+    var amtToFill = 0;
 
     var context = canvas.getContext("2d");
-    console.log(context);
-    $(".custom_canvas").append(canvas);
 
     function drawCanvasClock() {
         context.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -115,11 +112,13 @@ $(document).ready(function() {
         context.fill();
 
         context.beginPath();
+        context.font = "30px sans-serif";
         context.font = 'italic 30pt Roboto';
         context.fillStyle = "rgba(0, 0, 0, 0.54)";
         context.fillText(breakOrSession, centerX - 55, centerY - radius * .5);
 
         context.beginPath();
+        //context.font = "30px sans-serif";
         context.font = "30pt Roboto";
         context.fillStyle = "rgba(0, 0, 0, 0.54)";
         context.fillText(canvasMinutes + " : " + addZeros(canvasSeconds), centerX - 55, centerY + radius * .5);
@@ -127,32 +126,47 @@ $(document).ready(function() {
         context.restore();
         context.beginPath();
         context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        context.lineWidth = 2.0;
         context.strokeStyle = "#FF3D00";
         context.stroke();
 
-        amt += 10;
-        if (amt > full) amt = 0;
-    }
-
-    function drawhtmlClock() {
-
-        elemSeconds.textContent = addZeros((canvasSeconds).toString());
-        elemMinutes.textContent = (canvasMinutes).toString();
-        $(".pomodoro-text").text(breakOrSession);
-
+        amt += amtToFill;
+        if (amt > full)
+            amt = 0;
     }
 
     drawCanvasClock();
+    $(".custom_canvas").append(canvas);
 
     function step(timestamp) {
+
         updateTimer();
+        console.log(canvasMinutes);
+        console.log("canvas seconds : " + canvasSeconds);
+        console.log("amtToFill: " + amtToFill);
+        if (!amtToFill || !canvasMinutes && !canvasSeconds) {
+            amtToFill = createAmtToAnimateClock(canvasMinutes, canvasSeconds);
+        }
+
         drawCanvasClock();
-        drawhtmlClock();
+
+    }
+
+    function convertMinuteToSecs(minutes, seconds) {
+        return (minutes * (60 / 1)) + seconds;
+    }
+
+    function createAmtToAnimateClock(minutes, seconds) {
+        if (!minutes && !seconds) {
+            return 0;
+        }
+        var secondsForAnimation = convertMinuteToSecs(minutes, seconds);
+        return (radius * 2) / secondsForAnimation;
     }
 
     var setIntervalID = 0;
 
-    $(".time-session-minus").click(function() {
+    $(".time-session-minus").click(function () {
         var currentTime = parseInt($(".time-session-numeral").text());
         if (currentTime - 1 > 0) {
             $(".time-session-numeral").text(currentTime - 1);
@@ -160,60 +174,60 @@ $(document).ready(function() {
             canvasMinutes = +$(".time-session-numeral").text();
             amt = 0;
             drawCanvasClock();
-            drawhtmlClock();
 
         }
     });
 
-    $(".time-session-plus").click(function() {
+    $(".time-session-plus").click(function () {
         var currentTime = parseInt($(".time-session-numeral").text());
         $(".time-session-numeral").text(currentTime + 1);
 
         canvasMinutes = +$(".time-session-numeral").text();
         amt = 0;
         drawCanvasClock();
-        drawhtmlClock();
 
     });
 
-    $(".time-break-minus").click(function() {
+    $(".time-break-minus").click(function () {
         var currentTime = parseInt($(".time-break-numeral").text());
         if (currentTime - 1 >= 0) {
             $(".time-break-numeral").text(currentTime - 1);
         }
     });
 
-    $(".time-break-plus").click(function() {
+    $(".time-break-plus").click(function () {
         var currentTime = parseInt($(".time-break-numeral").text());
         $(".time-break-numeral").text(currentTime + 1);
     });
 
-    $(".reset").click(function() {
+    $(".reset").click(function () {
         $(".time-session-numeral").text("25");
 
-        //canvas 
+        //canvas
         canvasMinutes = 25;
         canvasSeconds = 0;
         breakOrSession = "Session";
 
         amt = 0;
+        amtToFill = 0;
         drawCanvasClock();
-        drawhtmlClock();
+
         clearInterval(setIntervalID);
         setIntervalID = 0;
     });
 
-    $(".stop").click(function() {
+    $(".stop").click(function () {
+
         clearInterval(setIntervalID);
         setIntervalID = 0;
     });
 
-    $(".start").click(function() {
+    $(".start").click(function () {
 
         if (setIntervalID === 0) {
-            setIntervalID = setInterval(function() {
-                step();
-            }, 1000);
+            setIntervalID = setInterval(function () {
+                    step();
+                }, 1000);
         }
 
     });
