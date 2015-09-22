@@ -2,32 +2,35 @@
 
     var twitchUsers = ["trumpsc", "freecodecamp"];
     var twitchUsersStatus = [];
+    var twitchUsersStatusObject = {};
 
     $("#btn_twitch_user").click(function () {
-        
-        twitchUsers.push($('#twitch_user').val().toLowerCase());
-        $(twitch_user).text("");
+        var newTwitchUser = $('#twitch_user').val().toLowerCase().trim();
+
+        if(twitchUsers.indexOf(newTwitchUser) === -1 && newTwitchUser !== "") {
+            twitchUsers.push(newTwitchUser);
+        }        
+        $('#twitch_user').val("");
         makeAjaxCall();
-        console.log(twitchUsers);
+        
     });
 
     function getOnlineStatus(status) {
         return status === "yes" ? "media-object fa fa-check" : "media-object fa fa-times";
     }
-    
+
     function emptyTwitchElementList(parent) {
-         var unorderedList = $(parent);
-         unorderedList.empty();        
+        var unorderedList = $(parent);
+        unorderedList.empty();
     }
 
-    function createListItems(name, status) {
+    function createListItems(name, status, url, statusDetails) {
         var image = document.createElement("img");
         image.setAttribute("src", "http://www.designerstalk.com/forums/image.php?u=6430&dateline=1287752962");
         image.className = "pull-left img-rounded";
 
         var a = document.createElement("a");
         a.setAttribute("href", "#");
-
         a.appendChild(image);
 
         var mediaLeft = document.createElement("div");
@@ -38,16 +41,31 @@
         var mediaHeading = document.createElement("h4");
         mediaHeading.className = "media-heading";
         mediaHeading.appendChild(mediaHeadingTitle);
+        
+        if(statusDetails !== "") {
+             var statusDetailsText = document.createTextNode(statusDetails);
+        } else {
+             var statusDetailsText = document.createTextNode("");
+        }
+        console.log(statusDetailsText);
+        var header6 = document.createElement("h6");
+        header6.appendChild(statusDetailsText);
         var mediaBody = document.createElement("div");
         mediaBody.className = "media-body";
         mediaBody.appendChild(mediaHeading);
+        mediaBody.appendChild(header6);
 
         var icon = document.createElement("i");
         icon.className = getOnlineStatus(status);
+        
+        var statusHolder = document.createElement("a");
+        statusHolder.setAttribute("href", url);
+        statusHolder.setAttribute("target", "_blank");
+        statusHolder.appendChild(icon);
 
         var mediaRight = document.createElement("div");
         mediaRight.className = "media-right";
-        mediaRight.appendChild(icon);
+        mediaRight.appendChild(statusHolder);
 
         var media = document.createElement("div");
         media.className = "media";
@@ -92,7 +110,6 @@
         var match;
         try {
             match = matchChannelAndName.exec(link);
-            //console.log(match);
             return match[match.length - 1];
         } catch (e) {
             console.log(e);
@@ -107,19 +124,28 @@
         len = args.length;
         for (i; i < len; i++) {
             var twitchStreamer = {};
+            console.log(args[i][0])
             twitchStreamer.name = getName(args[i][0]["_links"]["channel"]);
-            twitchStreamer.status = args[i][0]["stream"] === null ? "no" : "yes";
-            twitchUsersStatus.push(twitchStreamer);
+            if (Object.keys(twitchUsersStatusObject).indexOf(twitchStreamer.name) !== "") {
+                var url = "http://www.twitch.tv/" + twitchStreamer.name;
+                twitchStreamer["url"] = url;
+                twitchStreamer.status = args[i][0]["stream"] === null ? "no" : "yes";
+                if(twitchStreamer.status === "yes") {
+                     twitchStreamer.statusDetails = args[i][0]["stream"]["channel"]["status"];
+                } else {
+                      twitchStreamer.statusDetails = "";
+                }
+                twitchUsersStatusObject[twitchStreamer.name] = twitchStreamer;
+            }
+            //console.log(twitchUsersStatusObject);
         }
-        //console.log(twitchUsersStatus);
-        var j = 0,
-        len = twitchUsersStatus.length;
-        
+
         emptyTwitchElementList("#twitch_user_list");
         
-        twitchUsersStatus.forEach(function (user) {
-            createListItems(user.name, user.status);
-        });
+        for(var user in twitchUsersStatusObject) {
+            createListItems(twitchUsersStatusObject[user].name, twitchUsersStatusObject[user].status, twitchUsersStatusObject[user].url, twitchUsersStatusObject[user].statusDetails);
+        }
+        
 
     }
     function makeAjaxCall() {
@@ -132,7 +158,7 @@
             console.dir(xhr);
         });
     }
-    
+
     makeAjaxCall();
 
 });
