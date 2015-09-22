@@ -228,6 +228,14 @@ a {
     /* visibility: hidden; */
 }
 
+.fa-exclamation-triangle{
+     color: red;
+}
+
+h4 {
+    text-transform: capitalize;
+}
+
 /* 5. Footer
 ---------------------------------------*/
 
