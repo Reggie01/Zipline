@@ -2,6 +2,7 @@
 
     var twitchUsers = ["trumpsc", "freecodecamp"];
     var twitchUsersStatus = [];
+
     var twitchUsersStatusObject = {};
 
     $("#btn_twitch_user").click(function () {
@@ -19,18 +20,21 @@
         return status === "yes" ? "media-object fa fa-check" : "media-object fa fa-times";
     }
 
+
     function emptyTwitchElementList(parent) {
         var unorderedList = $(parent);
         unorderedList.empty();
     }
 
     function createListItems(name, status, url, statusDetails) {
+
         var image = document.createElement("img");
         image.setAttribute("src", "http://www.designerstalk.com/forums/image.php?u=6430&dateline=1287752962");
         image.className = "pull-left img-rounded";
 
         var a = document.createElement("a");
         a.setAttribute("href", "#");
+
         a.appendChild(image);
 
         var mediaLeft = document.createElement("div");
@@ -110,6 +114,7 @@
         var match;
         try {
             match = matchChannelAndName.exec(link);
+
             return match[match.length - 1];
         } catch (e) {
             console.log(e);
@@ -124,6 +129,7 @@
         len = args.length;
         for (i; i < len; i++) {
             var twitchStreamer = {};
+
             console.log(args[i][0])
             twitchStreamer.name = getName(args[i][0]["_links"]["channel"]);
             if (Object.keys(twitchUsersStatusObject).indexOf(twitchStreamer.name) !== "") {
@@ -146,7 +152,6 @@
             createListItems(twitchUsersStatusObject[user].name, twitchUsersStatusObject[user].status, twitchUsersStatusObject[user].url, twitchUsersStatusObject[user].statusDetails);
         }
         
-
     }
     function makeAjaxCall() {
         $.when.apply($, checkOnlineStatus(twitchUsers)).
