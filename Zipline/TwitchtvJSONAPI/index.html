@@ -1,45 +1,77 @@
 ﻿<!DOCTYPE html>
 <html>
- <head>
-  <meta lang="en" />
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Twitchtv Streamer Status</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="main.css">
-    </head>
-    <body>
-     <div class="container">
-      <div class="page-header">
-       <h2>Twitch Streamers Status
-       </h2>
-      </div>
-      <div>
-      <form>
-      <input type="text" id="twitch_user" class="form-control" placeholder="Twitch User">
-      <button type="button" id="btn_twitch_user" class="btn btn-default">Submit</button>
-      </form>
-      <div class="row">
-  
-       <ul class="list-group" id="twitch_user_list">
+
+<head>
+    <meta lang="en" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Twitchtv Streamer Status</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h2>Twitch Streamers Status</h2>
+        </div>
         
-       </ul>
-      </div>
+            <form>
+                <input type="text" id="twitch_user" class="form-control" placeholder="Twitch User">
+                <button type="button" id="btn_twitch_user" class="btn btn-default">Submit</button>
+            </form>
+            
 
-     </div>
+        <ul class="nav nav-tabs" id="myTabs" role="tablist">
+            <li role="presentation" class="active"><a href="#users" id="users_tab" role="tab" aria-controls="home" aria-expanded="true">All</a>
+            </li>
+            <li role="presentation" class><a href="#online" id="online_tab" role="tab" aria-controls="online" aria-expanded="false">Online</a>
+            </li>
+            <li role="presentation" class><a href="#offline" id="offline_tab" role="tab" aria-controls="offline" aria-expanded="false">Offline</a>
+            </li>
+        </ul>
 
-     </div>
+        <div id="myTabContent" class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="users" aria-labelledby="users_tab">
+                <div class="row">
 
-     <footer>
-      <div class="container">
-       <div class="footer-bottom-section">
-                    &copy; 2015 Reggie Sanders. All Rights Reserved.
-       </div>
-       
-      </div>
-     </footer>
-     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-     <script src="index.js"></script>
-    </body>
-   </html>
+                    <ul class="list-group" id="twitch_user_all">
+
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="online" aria-labelledby="online_tab">
+                <div class="row">
+
+                    <ul class="list-group" id="twitch_users_online">
+
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="offline" aria-labelledby="offline_tab">
+                <div class="row">
+
+                    <ul class="list-group" id="twitch_users_offline">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom-section">
+                &copy; 2015 Reggie Sanders. All Rights Reserved.
+            </div>
+
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
