@@ -20,12 +20,12 @@
         
             <form>
                 <input type="text" id="twitch_user" class="form-control" placeholder="Twitch User">
-                <button type="button" id="btn_twitch_user" class="btn btn-default">Submit</button>
+                <button type="submit" id="btn_twitch_user" class="btn btn-primary">Submit</button>
             </form>
             
 
         <ul class="nav nav-tabs" id="myTabs" role="tablist">
-            <li role="presentation" class="active"><a href="#users" id="users_tab" role="tab" aria-controls="home" aria-expanded="true">All</a>
+            <li role="presentation" class="active"><a href="#users" id="all_users_tab" role="tab" aria-controls="all_users_tab" aria-expanded="true">All</a>
             </li>
             <li role="presentation" class><a href="#online" id="online_tab" role="tab" aria-controls="online" aria-expanded="false">Online</a>
             </li>
@@ -33,30 +33,30 @@
             </li>
         </ul>
 
-        <div id="myTabContent" class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="users" aria-labelledby="users_tab">
-                <div class="row">
+        <div id="myTabContent" class="tab-content ">
+            <div role="tabpanel" class="tab-pane fade active in " id="users" aria-labelledby="all_users_tab">
+                
 
-                    <ul class="list-group" id="twitch_user_all">
+                    <ul class="list-group" id="twitch_users_all">
 
                     </ul>
-                </div>
+                
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="online" aria-labelledby="online_tab">
-                <div class="row">
+            <div role="tabpanel" class="tab-pane fade " id="online" aria-labelledby="online_tab">
+
 
                     <ul class="list-group" id="twitch_users_online">
 
                     </ul>
-                </div>
+
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="offline" aria-labelledby="offline_tab">
-                <div class="row">
+            <div role="tabpanel" class="tab-pane fade " id="offline" aria-labelledby="offline_tab">
+
 
                     <ul class="list-group" id="twitch_users_offline">
 
                     </ul>
-                </div>
+
             </div>
         </div>
     </div>
