@@ -229,8 +229,8 @@ a {
   border-radius: 0;
   min-width: 64px;
   min-height: 36px;
-  padding: 0 8px;
   margin: 8px;
+  text-transform: capitalize;
 }
 
 .btn:focus,
