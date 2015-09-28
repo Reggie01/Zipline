@@ -280,13 +280,11 @@ html, body {
 }
 
 .weather-wind {
-  width: 50%;
-  float: left;
+
 }
 
 .weather-humidity {
-  width: 50%;
-  float: left;
+
 }
 
 .button-container {
@@ -298,10 +296,7 @@ html, body {
 .weather-card {
   padding: 24px 16px;
   margin: 0 auto;
-  
-  text-align: left;
   background-color: rgba(0,0,0,0.1);
-  width: 300px;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
 }
 
@@ -328,7 +323,7 @@ html, body {
   line-height: 3.68rem;
 }
 
-.wi-wind.towards-0-deg {
+.wi-wind {
   font-size: 20px;
   font-size: 1.2rem;
   font-weight: 500;
@@ -354,27 +349,11 @@ html, body {
   line-height: 2rem;
 }
 
-.weather-wind-speed {
+.weather-wind-speed, .weather-humidity-percent {
   font-size: 20px;
   font-size: 1.2rem;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.87);
-}
-
-.weather-humidity-percent {
-  font-size: 20px;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.weather-wind-direction {
-  font-size: 20px;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.87);
-  text-transform: uppercase;
-  margin-right: 5px;
 }
 
 .card-title {

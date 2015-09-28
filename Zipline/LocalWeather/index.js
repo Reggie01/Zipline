@@ -380,27 +380,16 @@
         default: "",
     };
     
-    var degrees = function(degree) {
-        if(degree === "" || degree === undefined || degree === "fahrenheit") {
-            return "wi wi-fahrenheit";
-        }
-        return "wi wi-celsius";       
-    }
-    
     var getWeatherCondition = function weatherCondition(weatherCodes) {
        if(weatherCodes !== "clouds") {
           $(".weather-city").css("color", "black");
           $(".wi").css("color", "black");
           $(".weather-temp").css("color", "black");
-          $(".weather-conditions").css("color", "black");
-          $(".weather-wind-title").css("color", "black");
+          $("#weather-conditions").css("color", "black");
           
        }
        
     };
-
-    /* Wind icons currently not in cdnjs hosted version. Double checked for icons in the source file. Replace text with icons when available.
-    TODO: Replace wind icon with text direction.  */
     
     var windImages = {
         0: {
@@ -488,16 +477,26 @@
        if (windspeed >= 313 && windspeed < 336 ) return windImages["313"];     
     }; 
         
-    var tempConverter = {
-       celsiustofahrenheit: function (temp) { return (temp - 32) * (5/9);},
-       fahrenheittocelsius: function(temp) { return temp * (9/5) + 32; },
-       kelvintofahrenheit: function(temp) { return (temp - 273.15) * 1.8 + 32; }
-    }    
+    var weatherTemp = {};  
         
-    var KelvinToFarenheit = function(temp, convertTo, convertFrom) {
-        var converterString = (convertFrom+"to"+convertTo).toLowerCase();
-        return Math.ceil(tempConverter[converterString](temp));
+    var KelvinToFarenheit = function(temp) {
+        /* (K - 273.15) * 1.8 + 32 = Kelvin to Fahrenheit formula */
+        weatherTemp.fahrenheit = Math.ceil((temp - 273.15) * 1.8 + 32);
+        weatherTemp.celsius = Math.ceil((weatherTemp.fahrenheit -32)*5/9);
+        return weatherTemp.fahrenheit;
     };
+    
+    var windSpds = {};
+    
+    var windSpdConverter = function windConverter(mps) {
+         // mps * km/1000m *60s/min * 60min/hr or 1mps = 3.6kph
+         var kph = mps * 3.6;
+         windSpds.kph = kph.toFixed(2) + " kph";
+         // 0.621371mi / 1 km
+         var mph = kph * .621371;
+         windSpds.mph = mph.toFixed(2) + " mph";
+         return mph.toFixed(2);
+    }
     
     function getWeather(geo) {
         var geoLocation = geo.loc.split(",");
@@ -512,10 +511,11 @@
             var city = response["city"]["name"];
             var country = response["city"]["country"];
 
-            var currentTemp = KelvinToFarenheit((response["list"][0]["main"]["temp"]), "fahrenheit", "kelvin");
+            var currentTemp = KelvinToFarenheit((response["list"][0]["main"]["temp"]));
      
             var humidity = response["list"][0]["main"]["humidity"];
             var windSpd = response["list"][0]["wind"]["speed"];
+            var mph = windSpdConverter(windSpd);
             var windDegree = response["list"][0]["wind"]["deg"];
             var weatherID = response["list"][0]["weather"][0]["id"];
             var weatherCondition = weatherConditionCodes[weatherID]["meaning"];
@@ -524,23 +524,19 @@
             var weatherPicture = weatherPictures[weatherConditionCodes[weatherID]["condition"]];
 
             var windText = getWindImage(windDegree)["icon"];
-            console.log(windText);
                   
             $("body").removeClass().addClass("weather-background");
             $(".weather-city").append(city + ", " + country);
             $("body").css("background-image", "url("+weatherPicture+")");
             $(".weather-icon").removeClass().addClass("wi " + weatherIcon);
             $(".weather-temp").append(currentTemp);
-            $(".weather-conditions").append(weatherCondition);
-            $(".weather-wind-speed").append(windSpd);
+            $("#weather-conditions").append(weatherCondition);
+            $(".weather-wind-speed").append(mph);
             $(".weather-humidity-percent").append(humidity + "%");
-            var someStr = "<i class=" + windText+"></i>";
-            console.log(someStr);
-            $(".weather-wind-direction").append("<i class='"+windText+"'></i>");
+            $(".weather-wind-direction-js").append("<i class='"+windText+"'></i>");
                        
             $(".weather").removeClass("hide");
-            console.log(geo);
-            console.log(response);
+
         }).
         fail(function(xhr, status, errorThrown) {
             console.log("Sorry there was a problem.");
@@ -557,9 +553,6 @@
         return $.ajax({
                 url: "http://ipinfo.io"
             }).
-            /*done(function(response) {
-              console.log(response.ip, response.country, response.city, response.loc);
-            }). */
         fail(function(xhr, status, errorThrown) {
             console.log("Sorry, there was a problem");
             console.log("Error: " + errorThrown);
@@ -579,21 +572,22 @@
             dataType: " jsonp"
         });
     
-      getGeoCoords().then(getWeather)
-       
-     var weatherTemp = {};       
+      getGeoCoords().then(getWeather);
         
+      function replaceTempandWindText(weatherUnit, windSpdUnit){
+            $('.weather-temp').text("");
+            $('.weather-temp').text(weatherTemp[weatherUnit]);
+            $('.current-image').removeClass().addClass("current-image wi wi-"+weatherUnit);
+            $(".weather-wind-speed").text("");
+            $(".weather-wind-speed").text(windSpds[windSpdUnit]); 
+      }
+      
      $(".weather-fahrenheit").click(function() {
          
          if($("#weather-degree").hasClass("wi-celsius")) {
-            
-            //var currentTemp = parseInt($('.weather-temp').text());
-            $('.weather-temp').text("");
-            //$('.weather-temp').text(KelvinToFarenheit(currentTemp, "celsius", "fahrenheit"));
-            //$('.weather-temp').text(currentTemp);
-            $('.weather-temp').text(weatherTemp["fahrenheit"]);
-            $('.current-image').removeClass().addClass("current-image wi wi-fahrenheit");
-            
+                 
+            replaceTempandWindText("fahrenheit", "mph");                 
+    
             $(".weather-celsius").removeClass("green");
             $(this).addClass("green");
          }
@@ -603,17 +597,8 @@
         $(".weather-celsius").click(function() {
            if($("#weather-degree").hasClass("wi-fahrenheit")) {
             
-            if(weatherTemp["fahrenheit"] === undefined || weatherTemp["fahrenheit"] === "") {
-             weatherTemp["fahrenheit"] = parseInt($('.weather-temp').text());
-            }
-            var currentTemp = weatherTemp["fahrenheit"];
-            $('.weather-temp').text("");
-            if(weatherTemp["celsius"] === undefined || weatherTemp["celsius"] === "") {
-               weatherTemp["celsius"] = KelvinToFarenheit(currentTemp, "fahrenheit", "celsius")
-            }
-            $('.weather-temp').text(weatherTemp["celsius"]);
-            $('.current-image').removeClass().addClass("current-image wi wi-celsius");
-            
+            replaceTempandWindText("celsius", "kph");  
+
             $(".weather-fahrenheit").removeClass("green");
             $(this).addClass("green");
            }

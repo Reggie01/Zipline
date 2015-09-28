@@ -19,18 +19,20 @@
   <div class="container">
     <h2 class="text-center">Free Code Camp Zipline</h2>
 
-    <section id="weather" class="weather hide">
+    <section class="weather hide" id="weather">
       <h3 class="text-center">Local Weather App</h3>
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12 center-block">
           <div class="weather-card">
             <div class="weather-city"></div>
             <div><i class="weather-icon"></i><span class="weather-temp"></span><i class="current-image wi wi-fahrenheit" id="weather-degree"></i></div>
-            <div class="weather-conditions"></div>
+            <div id="weather-conditions" class="weather-conditions col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
             <div class="weather-wind">
-              <div class="weather-wind-title"><span>Wind</span></div><span class="weather-wind-direction"></span><span class="weather-wind-speed"></span></div>
-            <div class="weather-humidity">
-              <div class="weather-humidity-title"><span>Humidity</span></div><span class="weather-humidity-percent"></span></div>
+              <span class="weather-conditions">Wind:</span><span class="weather-wind-direction-js"></span><span class="weather-wind-speed"></span>
+            </div>
+            <div class="weather-humidity ol-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <span class="weather-conditions">Humidity:</span><span class="weather-humidity-percent"></span>
+            </div>
             <div style="clear:both;"></div>
           </div>
         </div>
