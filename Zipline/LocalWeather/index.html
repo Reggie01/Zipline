@@ -1,46 +1,52 @@
 ﻿<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.5/css/weather-icons.min.css">
-    <link rel="stylesheet" href="main.css">
-    <title>Local Weather</title>
-  </head>
-  <body class="weather-background">
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Zipline: Show the Local Weather" />
+  <meta name="keywords" content="fcc, web-development, zipline, weather" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <link href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css">
+  <link rel="stylesheet" href="main.css">
+  <title>Local Weather</title>
+</head>
+
+<body class="weather-background">
+  <div class="container">
     <h2 class="text-center">Free Code Camp Zipline</h2>
-    <h3 class="text-center">Local Weather App</h3>
-    </div>
-    <section class="weather">
+
+    <section id="weather" class="weather hide">
+      <h3 class="text-center">Local Weather App</h3>
       <div class="row">
-        <div class="col-md-4 col-sm-4"></div>
-        <div class="col-md-4 col-sm-4 col-xs-12">
-            <div class="weather-card">
-              <div class="weather-city"></div>
-              <div><i class="weather-icon"></i><span  class="weather-temp"></span><i id="weather-degree" class="current-image wi wi-fahrenheit"></i></div>
-              <div class="weather-conditions"></div>
-              <div class="weather-wind"><div class="weather-wind-title"><span>Wind</span></div><span class="weather-wind-direction"></span><span class="weather-wind-speed"></span></div>
-              <div class="weather-humidity"><div class="weather-humidity-title"><span>Humidity</span></div><span class="weather-humidity-percent"></span></div>         
-              <div style="clear:both;"></div>              
-           </div>
-         </div>
+        <div class="col-md-4 col-sm-6 col-xs-12 center-block">
+          <div class="weather-card">
+            <div class="weather-city"></div>
+            <div><i class="weather-icon"></i><span class="weather-temp"></span><i class="current-image wi wi-fahrenheit" id="weather-degree"></i></div>
+            <div class="weather-conditions"></div>
+            <div class="weather-wind">
+              <div class="weather-wind-title"><span>Wind</span></div><span class="weather-wind-direction"></span><span class="weather-wind-speed"></span></div>
+            <div class="weather-humidity">
+              <div class="weather-humidity-title"><span>Humidity</span></div><span class="weather-humidity-percent"></span></div>
+            <div style="clear:both;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12 center-block">
+          <div class="button-container">
+            <button class="btn weather-fahrenheit green"><i class="wi wi-fahrenheit "></i></button>
+            <button class="btn weather-celsius"><i class="wi wi-celsius"></i></button>
+          </div>
+        </div>
       </div>
     </section>
-    <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-4"></div>
-        <div class="col-md-4 col-sm-4 col-xs-12 ">
-            <div class="button-container">
-                <button class="btn weather-fahrenheit green"><i class="wi wi-fahrenheit "></i></button>
-                <button class="btn weather-celsius"><i class="wi wi-celsius"></i></button>
-            </div>
-        </div>
-    </div>
-    
-
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="index.js"></script>
-  </body>
+  </div>
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="index.js"></script>
+</body>
 
 </html>
