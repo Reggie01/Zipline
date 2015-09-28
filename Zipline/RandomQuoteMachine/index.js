@@ -31,15 +31,15 @@
             }).
             // Code to run regardless of success or failure
         always(function(xhr, status) {
-            //alert("The request is complete!");
-            console.log(xhr);
+            
+            //console.log(xhr);
         });
     }
 
     postQuote();
 
-    $("#quote").click(function() {
-
+    $("#quote").click(function(e) {
+        e.preventDefault();
         postQuote();
 
     });
