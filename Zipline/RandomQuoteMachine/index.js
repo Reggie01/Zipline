@@ -18,7 +18,6 @@
             }).
             // Work with the response
         done(function(response) {
-            console.log(response); // server response
             $("#new-quote").html('"' + response.quoteText + '"');
             $("#author-quote").html(response.quoteAuthor);
             tweetButton.src = tweetButton.src.replace(/&text=[^&]+/, "&text=" + encodeURIComponent(response.quoteText + " - " + response.quoteAuthor));
