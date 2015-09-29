@@ -1,108 +1,104 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en-us">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="main.css">
-    <title>Pomodoro Clock</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="description" content="Zipline: Build a Pomodoro Clock The fourth zipline from basic front end development projects. ">
+  <meta name="keywords" content="fcc, zipline, pomodoro clock, javascript">
+  <link href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="main.css">
+  <title>Pomodoro Clock</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
+  <div class="container">
 
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <h2 class="title">Pomodoro Clock</h2>
-            </div>
+    <h2 class="title">Pomodoro Clock</h2>
+
+    <div class="row">
+
+      <div class="time-length-container col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+        <h6>Break Length</h6>
+
+        <div class="time-container">
+          <button class="time-break-minus btn btn-primary "><i class="fa fa-minus"></i>
+          </button>
+          <span class="time-break-numeral">5</span>
+          <button class="time-break-plus btn btn-primary "><i class="fa fa-plus"></i>
+          </button>
         </div>
-        <div class="row">
-            <div class="col-md-3 col-lg-3"></div>
-            <div class="time-length-container col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="time-text">
-                    <h6>Break Length</h6>
-                </div>
-                <div class="time-container">
-                    <button class="btn btn-primary time-break-minus"><i class="fa fa-minus"></i>
-                    </button>
-                    <span class="time-break-numeral">5</span>
-                    <button class="btn btn-primary time-break-plus"><i class="fa fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="time-length-container col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="time-text">
-                    <h6>Session Length</h6>
-                </div>
-                <div class="time-container">
-                    <button class="btn btn-primary time-session-minus"><i class="fa fa-minus"></i>
-                    </button>
-                    <span class="time-session-numeral">25</span>
-                    <button class="btn btn-primary time-session-plus"><i class="fa fa-plus"></i>
-                    </button>
-                </div>
-            </div>
+
+      </div>
+
+      <div class="time-length-container col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+        <h6>Session Length</h6>
+
+        <div class="time-container">
+          <button class="time-session-minus btn btn-primary "><i class="fa fa-minus"></i>
+          </button>
+          <span class="time-session-numeral">25</span>
+          <button class="time-session-plus btn btn-primary "><i class="fa fa-plus"></i>
+          </button>
         </div>
-        <div class="row">
-            <div class="container col-md-3 col-lg-4 col-sm-12 col-lg-4">
-            </div>
 
+      </div>
 
-            <div class="col-md-6 col-sm-12 col-lg-4">
-
-                <div class="custom_canvas">
-
-                </div>
-
-            </div>
-        </div>
-        <div class="row button_words">
-
-            <div class="col-lg-4">
-                
-            </div>
-            <div class="col-lg-4 ">
-                <button class="btn btn-primary start"><i class="fa fa-play"></i>Start</button>
-                <button class="btn btn-primary stop"><i class="fa fa-pause"></i>Pause</button>
-                <button class="btn btn-primary reset"><i class="fa fa-undo"></i>Reset</button>
-            </div>
-            <div class="col-lg-4">
-                
-            </div>
-
-        </div>
-        <div class="row button_icons_only">
-
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <button class="btn btn-primary start"><i class="fa fa-play"></i>
-                </button>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <button class="btn btn-primary stop"><i class="fa fa-pause"></i>
-                </button>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <button class="btn btn-primary reset"><i class="fa fa-undo"></i>
-                </button>
-            </div>
-
-        </div>
-        <audio src="electronic_store_bell_two_rings.mp3" preload="auto"></audio>
     </div>
+    <div class="row">
 
-    <footer>
-        <div class="container">
-            <div class="footer-bottom-section">
-                &copy; 2015 Reggie Sanders. All Rights Reserved.
-            </div>
-            <span>Sounds Effects from <a href="http://www.freesfx.co.uk" target="_blank">http://www.freesfx.co.uk</a></span>
+      <div class="center-block col-md-6 col-sm-12 col-lg-4 ">
+
+        <div class="custom_canvas">
+
         </div>
-    </footer>
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="index.js"></script>
+
+      </div>
+    </div>
+    <div class="row button_words">
+
+      <div class="center-block col-lg-4">
+        <button class="start btn btn-primary"><i class="fa fa-play"></i>Start</button>
+        <button class="stop btn btn-primary"><i class="fa fa-pause"></i>Pause</button>
+        <button class="reset btn btn-primary"><i class="fa fa-undo"></i>Reset</button>
+      </div>
+
+    </div>
+    <div class="button_icons_only row">
+
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        <button class="start btn btn-primary"><i class="fa fa-play"></i>
+        </button>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        <button class="stop btn btn-primary"><i class="fa fa-pause"></i>
+        </button>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        <button class="reset btn btn-primary"><i class="fa fa-undo"></i>
+        </button>
+      </div>
+
+    </div>
+    <audio src="electronic_store_bell_two_rings.mp3" preload="auto"></audio>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-bottom-section">
+        &copy; 2015 Reggie Sanders. All Rights Reserved.
+      </div>
+      <span>Sounds Effects from <a href="http://www.freesfx.co.uk" target="_blank">http://www.freesfx.co.uk</a></span>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="index.js"></script>
 </body>
 
 </html>

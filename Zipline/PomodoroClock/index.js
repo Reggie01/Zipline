@@ -72,7 +72,7 @@ $(document).ready(function () {
         return dpr / bsr;
     })();
 
-    createHiDPICanvas = function (w, h, ratio) {
+    var createHiDPICanvas = function (w, h, ratio) {
         if (!ratio) {
             ratio = PIXEL_RATIO;
         }
@@ -90,7 +90,9 @@ $(document).ready(function () {
     var canvasHeight = customCanvas.getClientRects()[0].width; //350;
 
     var canvas = createHiDPICanvas(canvasWidth, canvasHeight);
-
+    
+   
+    
     var centerX = canvasWidth * .5;
     var centerY = canvasHeight * .5;
     var radius = (canvasHeight / 2) * .9;
@@ -165,7 +167,9 @@ $(document).ready(function () {
     }
 
     var setIntervalID = 0;
-
+    
+    
+    
     $(".time-session-minus").click(function () {
         var currentTime = parseInt($(".time-session-numeral").text());
         if (currentTime - 1 > 0) {
