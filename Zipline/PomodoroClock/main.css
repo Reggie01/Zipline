@@ -245,13 +245,11 @@ a {
     min-width: 64px;
     min-height: 64px;
 }
-.time-text {} .cutom_canvas {
-    /* margin-left: 100px; */
-}
+
 canvas {
     margin: 0 auto;
 }
-.button_words {} .button_icons_only {
+.button_icons_only {
     display: none;
 }
 .center-block {
