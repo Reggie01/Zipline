@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons-wind.min.css">
   <link rel="stylesheet" href="main.css">
   <title>Local Weather</title>
-    <!--[if lte IE 8]>
+  <!--[if lte IE 8]>
 	    <link rel="stylesheet" type="text/css" href="ie8-and-down.css" />
   <![endif]-->
 </head>
@@ -25,15 +25,15 @@
     <section class="weather hide" id="weather">
       <h3 class="text-center">Local Weather App</h3>
       <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-12 center-block">
+        <div class="center-block col-md-4 col-sm-6 col-xs-12">
           <div class="weather-card">
             <div class="weather-city"></div>
             <div><i class="weather-icon"></i><span class="weather-temp"></span><i class="current-image wi wi-fahrenheit" id="weather-degree"></i></div>
-            <div id="weather-conditions" class="weather-conditions col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+            <div class="weather-conditions col-lg-12 col-md-12 col-sm-12 col-xs-12" id="weather-conditions"></div>
             <div class="weather-wind">
               <span class="weather-conditions">Wind:</span><span class="weather-wind-direction-js"></span><span class="weather-wind-speed"></span>
             </div>
-            <div class="weather-humidity ol-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="weather-humidity col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <span class="weather-conditions">Humidity:</span><span class="weather-humidity-percent"></span>
             </div>
             <div style="clear:both;"></div>
@@ -41,9 +41,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-12 center-block">
+        <div class="center-block col-md-4 col-sm-6 col-xs-12 ">
           <div class="button-container">
-            <button class="btn weather-fahrenheit green"><i class="wi wi-fahrenheit "></i></button>
+            <button class="btn weather-fahrenheit disabled-btn"><i class="wi wi-fahrenheit "></i></button>
             <button class="btn weather-celsius"><i class="wi wi-celsius"></i></button>
           </div>
         </div>
