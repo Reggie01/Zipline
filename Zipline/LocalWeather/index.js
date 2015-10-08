@@ -1,7 +1,43 @@
-﻿$(document).ready( function() {
+﻿$( document ).ready( function() {
     "use strict";
-    var weatherConditionCodes = {
-        200: {
+    
+     var Module = ( function() {
+           var typeCheckForNumber = function( num ) {        
+               return typeof windspeed !== "number" || !num || num < 0;
+           };
+           
+           var getNumberForWindImage = function( windspeed ) {
+         
+               if( !Module.typeCheckForNumber( windspeed ) ) 
+               {
+                  return Module.windImages[ 0 ];
+               }
+         
+               var windSpeeds = [ 0,23,45,68,90,113,135,158,180,203,225,248,270,293,313,336 ],
+                                         i = 0,
+                                     len = windSpeeds.length;
+         
+              for( ; i < len; i++ ) { 
+                  if( windspeed >= 336 ) {
+                      return  Module.windImages[ 336 ];
+                  }
+                  if( windspeed >= windSpeeds[ i ] &&  windspeed < windSpeeds[ i + 1 ] ) {
+                      return Module.windImages[  windSpeeds[ i ]  ];
+                  }
+              }
+
+           };
+           
+          return {
+               typeCheckForNumber: typeCheckForNumber,
+               getNumberForWindImage: getNumberForWindImage
+          };
+     })();
+    
+     var weatherConditionCodesModule = (function(Module) {
+
+       Module.weatherConditionCodes = {
+           200: {
             meaning: "thunderstorm with light rain",
             icon: "wi-owm-200",
             condition: "thunderstorm"
@@ -249,7 +285,7 @@
         800: {
             meaning: "clear sky",
             icon: "wi-owm-800",
-            condition: "clouds"
+            condition: "default"
         },
         801: {
             meaning: "few clouds",
@@ -365,21 +401,32 @@
             meaning: "hurricane",
             icon: "wi-owm-902",
             condition: "additional"
-        }
-    };
-
-    var weatherPictures = {
-        thunderstorm: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/3EPA01FY99compressed.jpg?raw=true",
-        drizzle: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/E0A7D9FEC0compressed.jpg?raw=true",
-        rain: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/WVJQXASGV2compressed.jpg?raw=true",
-        snow: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/0HG4V8BOLUcompressed.jpg?raw=true",
-        atmosphere: "",
-        clouds: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/G0HQJZEF3Lcompressed.jpg?raw=true",
-        extreme: "",
-        additional: "",
-        default: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/DART0JM8VNcompressed.jpg?raw=true",
-    };
+        }     
+       }
+       return Module;
+       
+   })( Module || {} );
+  
     
+    var WeatherPicturesModule = (function( Module ) {
+        
+        Module.weatherPictures =  {
+                thunderstorm: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/3EPA01FY99compressed.jpg?raw=true",
+                drizzle: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/E0A7D9FEC0compressed.jpg?raw=true",
+                rain: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/WVJQXASGV2compressed.jpg?raw=true",
+                snow: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/0HG4V8BOLUcompressed.jpg?raw=true",
+                atmosphere: "",
+                clouds: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/G0HQJZEF3Lcompressed.jpg?raw=true",
+                extreme: "",
+                additional: "",
+                default: "https://github.com/Reggie01/Zipline/blob/master/Zipline/LocalWeather/images/DART0JM8VNcompressed.jpg?raw=true",
+            
+        };
+        
+        return Module;
+        
+    })( Module || {} );
+     
     var getWeatherCondition = function weatherCondition( weatherCodes ) {
        if( weatherCodes !== "clouds" ) {
           $( ".weather-city" ).css( "color", "black" );
@@ -390,121 +437,113 @@
        }
        
     };
-    
-    var windImages = {
-        0: {
-            icon: "wi wi-wind towards-0-deg",
-            text: "n"
-        },
-        23: {
-            icon: "wi wi-wind towards-23-deg",
-            text: "nne"
-        },
-        45: {
-            icon: "wi wi-wind towards-45-deg",
-            text: "ne"
-        },
-        68: {
-            icon: "wi wi-wind towards-68-deg",
-            text: "ene"
-        },
-        90: {
-            icon: "wi wi-wind towards-90-deg",
-            text: "e"
-        },
-        113: {
-            icon: "wi wi-wind towards-113-deg",
-            text: "ese"
-        },
-        135: {
-            icon: "wi wi-wind towards-135-deg",
-            text: "se"
-        },
-        158: {
-            icon: "wi wi-wind towards-158-deg",
-            text: "sse"
-        },
-        180: {
-            icon: "wi wi-wind towards-180-deg",
-            text: "s"
-        },
-        203: {
-            icon: "wi wi-wind towards-203-deg",
-            text: "ssw"
-        },
-        225: {
-            icon: "wi wi-wind towards-225-deg",
-            text: "sw"
-        },
-        248: {
-            icon: "wi wi-wind towards-248-deg",
-            text: "wsw"
-        },
-        270: {
-            icon: "wi wi-wind towards-270-deg",
-            text: "w"
-        },
-        293: {
-            icon: "wi wi-wind towards-293-deg",
-            text: "wnw"
-        },
-        313: {
-            icon: "wi wi-wind towards-313-deg",
-            text: "nw"
-        },
-        336: {
-            icon: "wi wi-wind towards-336-deg",
-            text: "nnw"
-        }
-    };
-    
-    var typeCheckForNumber = function( num ) {        
-         return typeof windspeed !== "number" || !num || num < 0;
-    };
-
-    var getNumberForWindImage = function( windspeed ) {
+    var WindImagesModule = (function( Module ) {
          
-         if( !typeCheckForNumber( windspeed ) ) 
-         {
-              return windImages[ 0 ];
+         Module.windImages = {
+             0: {
+                icon: "wi wi-wind towards-0-deg",
+                text: "n"
+             },
+             23: {
+                icon: "wi wi-wind towards-23-deg",
+                text: "nne"
+             },
+             45: {
+                icon: "wi wi-wind towards-45-deg",
+                text: "ne"
+             },
+             68: {
+                icon: "wi wi-wind towards-68-deg",
+                text: "ene"
+             },
+             90: {
+                icon: "wi wi-wind towards-90-deg",
+                text: "e"
+             },
+             113: {
+                icon: "wi wi-wind towards-113-deg",
+                text: "ese"
+             },
+            135: {
+                icon: "wi wi-wind towards-135-deg",
+                text: "se"
+            },
+            158: {
+                icon: "wi wi-wind towards-158-deg",
+                text: "sse"
+            },
+            180: {
+                icon: "wi wi-wind towards-180-deg",
+                text: "s"
+            },
+            203: {
+                icon: "wi wi-wind towards-203-deg",
+                text: "ssw"
+            },
+            225: {
+                icon: "wi wi-wind towards-225-deg",
+                text: "sw"
+            },
+            248: {
+                icon: "wi wi-wind towards-248-deg",
+                text: "wsw"
+            },
+            270: {
+                icon: "wi wi-wind towards-270-deg",
+                text: "w"
+            },
+            293: {
+                icon: "wi wi-wind towards-293-deg",
+                text: "wnw"
+            },
+            313: {
+                icon: "wi wi-wind towards-313-deg",
+                text: "nw"
+            },
+            336: {
+                icon: "wi wi-wind towards-336-deg",
+                text: "nnw"
+            }
          }
-         
-         var windSpeeds = [ 0,23,45,68,90,113,135,158,180,203,225,248,270,293,313,336 ],
-                                   i = 0,
-                               len = windSpeeds.length;
-         
-         for( ; i < len; i++ ) { 
-              if( windspeed >= 336 ) {
-                   return  windImages[ 336 ];
-              }
-              if( windspeed >= windSpeeds[ i ] &&  windspeed < windSpeeds[ i + 1 ] ) {
-                   return windImages[  windSpeeds[ i ]  ];
-              }
-         }
-
-    };
-            
-    var weatherTemp = {};  
+    })( Module || {} );
+    
+    var unitConversionModule = ( function(Module) {
         
-    var KelvinToFarenheit = function( temp ) {
-        /* ( K - 273.15 ) * 1.8 + 32 = Kelvin to Fahrenheit formula */
-        weatherTemp.fahrenheit = Math.ceil( ( temp - 273.15) * 1.8 + 32 );
-        weatherTemp.celsius = Math.ceil( ( weatherTemp.fahrenheit -32)*5/9 );
-        return weatherTemp.fahrenheit;
-    };
-    
-    var windSpds = {};
-    
-    var windSpdConverter = function windConverter( mps ) {
-         // mps * km/1000m *60s/min * 60min/hr or 1mps = 3.6kph
-         var kph = mps * 3.6;
-         windSpds.kph = kph.toFixed( 2 ) + " kph";
-         // 0.621371mi / 1 km
-         var mph = kph * 0.621371;
-         windSpds.mph = mph.toFixed( 2 ) + " mph";
-         return mph.toFixed( 2 ) + " mph";
-    };
-    
+        var _weatherTemp = {};  
+        var _windSpds = {};
+        
+        Module.windSpdConverter = function windConverter( mps ) {
+             
+             // mps * km/1000m *60s/min * 60min/hr or 1mps = 3.6kph
+             var kph = mps * 3.6;
+             _windSpds.kph = kph.toFixed( 2 ) + " kph";
+             // 0.621371mi / 1 km
+             var mph = kph * 0.621371;
+             _windSpds.mph = mph.toFixed( 2 ) + " mph";
+             return mph.toFixed( 2 ) + " mph";
+
+         };
+         
+         Module.windSpds = function() {
+              return _windSpds;
+         }
+        
+        Module.KelvinToFarenheit = function( temp ) {
+            /* ( K - 273.15 ) * 1.8 + 32 = Kelvin to Fahrenheit formula */
+            _weatherTemp.fahrenheit = Math.ceil( ( temp - 273.15) * 1.8 + 32 );
+            _weatherTemp.celsius = Math.ceil( ( _weatherTemp.fahrenheit -32)*5/9 );
+            return _weatherTemp;
+        };
+        
+        Module.weatherTemp = function() {
+             return _weatherTemp;
+        };
+        
+        return Module;
+        
+        
+    }( Module || {} ));        
+        
     var AjaxErrorHandler = (function() {
         return {
             errorHandler: function(xhr, status, errorThrown) {
@@ -519,111 +558,109 @@
         };
     })();
     
-    function getWeather( geo ) {
-        var geoLocation = geo.loc.split( "," );
-        var latitude = geoLocation[ 0 ];
-        var longitude = geoLocation[ 1 ];
-
-        $.ajax({
-            url: openWeatherURL.replace( /lat=[^A]+/, "lat=" + encodeURIComponent( latitude ) + "&lon=" + encodeURIComponent( longitude ) + "&" )
-        }).
-        done( function( response )  {
-            console.log( response );
-            var city = response.city.name;
-            var country = response[ "city" ][ "country" ];
-
-            var currentTemp = KelvinToFarenheit( (response[ "list" ][ 0 ][ "main" ][ "temp" ]) );
-     
-            var humidity = response[ "list" ][ 0 ][ "main" ][ "humidity" ];
-            var windSpd = response[ "list" ][ 0 ][ "wind" ][ "speed" ];
-            var mph = windSpdConverter( windSpd );
-            var windDegree = response[ "list" ][ 0 ][ "wind" ][ "deg" ];
-            var weatherID = response[ "list" ][ 0 ][ "weather" ][ 0 ][ "id" ];
-            var weatherCondition = weatherConditionCodes[ weatherID ][ "meaning" ];
-            weatherCondition = weatherCondition[ 0 ].toUpperCase() + weatherCondition.substring( 1 );
-            var weatherIcon = weatherConditionCodes[ weatherID ][ "icon" ];
-            var weatherPicture = weatherPictures[ weatherConditionCodes[ weatherID ][ "condition" ] ] ;
-
-            var windText = getNumberForWindImage( windDegree )[ "icon" ];
-                  
-            $( "body" ).removeClass().addClass( "weather-background" );
-            $( ".weather-city" ).append( city + ", " + country );
-            $( "body" ).css( "background-image", "url( "+weatherPicture+" )" );
-            $( ".weather-icon" ).removeClass().addClass( "wi " + weatherIcon );
-            $( ".weather-temp" ).append( currentTemp );
-            $( "#weather-conditions" ).append( weatherCondition );
-            $( ".weather-wind-speed" ).append( mph );
-            $( ".weather-humidity-percent" ).append( humidity + "%" );
-            $( ".weather-wind-direction-js" ).append( "<i class='"+windText+"'></i>" );
-                       
-            $( ".weather" ).removeClass( "hide" );
-
-        }).
-        fail( function(xhr, status, errorThrown ) {
-            console.log( "Sorry there was a problem." );
-            console.log( "Error: " + errorThrown);
-            console.log( "Status: " + status);
-            console.dir( xhr );
-        }).
-        always( function(xhr, status ) {
-            console.log( "The request is completed." );
-        });
-    }
-
-    function getGeoCoords() {
-        return $.ajax({
-                url: "http://ipinfo.io"
-            }).
-        fail( function(xhr, status, errorThrown ) {
-            console.log( "Sorry, there was a problem" );
-            console.log( "Error: " + errorThrown);
-            console.log( "Status: " + status);
-            console.dir( xhr );
-        }).
-        always( function(xhr, status ) {
-            //alert( "The request is completed." );
-        });
-
-    }
-
     var openWeatherURL = "http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&APPID=841fa5fa76dc867d0918d734c2f82f48";
+    
+    var ajaxCalls = function(url) {
+         
+         return $.ajax({
+              url: url
+         });
+    };
+    
+    var geoWeather = function(geo, url) {
+         var geoLocation = geo.loc.split( "," );
+         var latitude = geoLocation[ 0 ];
+         var longitude = geoLocation[ 1 ];
+         var url = url.replace( /lat=[^A]+/, "lat=" + encodeURIComponent( latitude ) + "&lon=" + encodeURIComponent( longitude ) + "&" );
+         return ajaxCalls(url);
+    };
+    
+    function setWeatherVariables(response) {
+        var temperatureVariables = {}
+            
+        temperatureVariables.city = response.city.name;
+        temperatureVariables.country = response[ "city" ][ "country" ];
+        temperatureVariables.currentTemp = Module.KelvinToFarenheit( (response[ "list" ][ 0 ][ "main" ][ "temp" ]) )["fahrenheit"];     
+        temperatureVariables.humidity = response[ "list" ][ 0 ][ "main" ][ "humidity" ];
+        var windSpd = response[ "list" ][ 0 ][ "wind" ][ "speed" ];
+        temperatureVariables.mph = Module.windSpdConverter( windSpd );
+        var windDegree = response[ "list" ][ 0 ][ "wind" ][ "deg" ];
+        var weatherID = response[ "list" ][ 0 ][ "weather" ][ 0 ][ "id" ];
+        var weatherCondition = Module.weatherConditionCodes[ weatherID ][ "meaning" ];
+        temperatureVariables.weatherCondition = weatherCondition[ 0 ].toUpperCase() + weatherCondition.substring( 1 );
+        temperatureVariables.weatherIcon = Module.weatherConditionCodes[ weatherID ][ "icon" ];
+        temperatureVariables.weatherPicture = Module.weatherPictures[ Module.weatherConditionCodes[ weatherID ][ "condition" ] ] ;
+
+        temperatureVariables.windText = Module.getNumberForWindImage( windDegree )[ "icon" ];
+        return temperatureVariables;
+    }
+    
+    function updateDomWithWeatherVariables(weatherVariable) {
+        $( "body" ).removeClass().addClass( "weather-background" );
+        $( ".weather-city" ).append( weatherVariable.city + ", " + weatherVariable.country );
+        $( "body" ).css( "background-image", "url( "+ weatherVariable.weatherPicture +" )" );
+        $( ".weather-icon" ).removeClass().addClass( "wi " + weatherVariable.weatherIcon );
+        $( ".weather-temp" ).append( weatherVariable.currentTemp );
+        $( "#weather-conditions" ).append( weatherVariable.weatherCondition );
+        $( ".weather-wind-speed" ).append( weatherVariable.mph );
+        $( ".weather-humidity-percent" ).append( weatherVariable.humidity + "%" );
+        $( ".weather-wind-direction-js" ).append( "<i class='"+ weatherVariable.windText +"'></i>" );                       
+        $( ".weather" ).removeClass( "hide" );
+    }
+    
+    function handleGeoData(response) {
+        var WeatherVariable = setWeatherVariables(response);
+            
+        updateDomWithWeatherVariables(WeatherVariable);  
+    }
+    
+    function getWeather( geo ) {
+        geoWeather(geo, openWeatherURL).
+        done( handleGeoData ).
+        fail( AjaxErrorHandler.errorHandler ).
+        always( AjaxErrorHandler.alwaysHandler );
+    }
+    
+    function getGeoCoords() {
+        var url = "http://ipinfo.io";
+        return $.ajax({
+              url: url
+         }).
+        fail( AjaxErrorHandler.errorHandler ).
+        always( AjaxErrorHandler.alwaysHandler );
+    }
 
         $.ajaxSetup({
             type: 'GET',
-            dataType: " jsonp"
+            dataType: "json"
         });
     
       getGeoCoords().then( getWeather );
         
       function replaceTempandWindText( weatherUnit, windSpdUnit ){
             $( '.weather-temp' ).text( "" );
-            $( '.weather-temp' ).text( weatherTemp[ weatherUnit ] );
+            $( '.weather-temp' ).text( Module.weatherTemp()[ weatherUnit ] );
             $( '.current-image' ).removeClass().addClass( "current-image wi wi-" + weatherUnit );
             $( ".weather-wind-speed" ).text( "" );
-            $( ".weather-wind-speed" ).text( windSpds[ windSpdUnit ] ); 
+            $( ".weather-wind-speed" ).text( Module.windSpds()[ windSpdUnit ] ); 
       }
       
-     $( ".weather-fahrenheit" ).click( function( ) {
-         
-         if( $( "#weather-degree" ).hasClass( "wi-celsius" ) ) {
-                 
-            replaceTempandWindText( "fahrenheit", "mph" );                 
-    
-            $( ".weather-celsius" ).removeClass( "disabled-btn" );
-            $( this ).addClass( "disabled-btn" );
-         }
-         
-      });
-        
-        $( ".weather-celsius" ).click( function( ) {
-           if( $( "#weather-degree" ).hasClass( "wi-fahrenheit" ) ) {
-            
-            replaceTempandWindText( "celsius", "kph" );  
+      function applyImperialOrMetricToDom( fromUnit, toUnit, windUnit ) {
 
-            $( ".weather-fahrenheit" ).removeClass( "disabled-btn" );
-            $( this ).addClass( "disabled-btn" );
-           }
-           
-        });
+         return function(e) {
+          
+              if( $( "#weather-degree" ).hasClass( "wi-" + fromUnit ) ) {
+                 
+                replaceTempandWindText(  toUnit, windUnit );                 
+    
+                $( ".weather-" + fromUnit ).removeClass( "disabled-btn" );
+                $( this ).addClass( "disabled-btn" );
+              }
+         }    
+      }
+      
+     $( ".weather-fahrenheit" ).click( applyImperialOrMetricToDom( "celsius", "fahrenheit", "mph" ) );
+        
+     $( ".weather-celsius" ).click( applyImperialOrMetricToDom( "fahrenheit", "celsius", "kph" ) );
 
 });
