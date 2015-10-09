@@ -1,0 +1,257 @@
+﻿/* TABLE OF CONTENTS
+
+    1. Basic Document Styles
+    2. Typography
+    3. Button
+    4. Calculator
+    5. Footer
+    6. Sticky Footer
+    7. Media Queries
+*/
+
+/* 1. Basic Document Styles
+-------------------------------------------------*/
+
+html * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+html {
+    font-size: 100%;
+}
+body {
+    overflow-x: hidden;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-weight: 400;
+    color: rgba(0,0,0,.87);
+    font-size: 14px;
+    font-size: .875rem;
+    line-height: 20px;
+    line-height: 1.25rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 112px;
+    font-size: 7rem;
+    color: rgba(0,0,0,.54);
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-weight: 300;
+}
+h2 {
+    font-size: 56px;
+    font-size: 3.5rem;
+    color: rgba(0,0,0,.54);
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-weight: 400;
+}
+h3 {
+    font-size: 45px;
+    font-size: 2.8rem;
+    color: rgba(0,0,0,.54);
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-weight: 400;
+    line-height: 48px;
+    line-height: 3rem;
+}
+h4 {
+    font-size: 34px;
+    font-size: 2.1rem;
+    color: rgba(0,0,0,.54);
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-weight: 400;
+    line-height: 40px;
+    line-height: 2.5rem;
+}
+h5 {
+    font-size: 24px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: rgba(0,0,0,.87);
+    line-height: 32px;
+    line-height: 2rem;
+}
+h6 {
+    font-size: 20px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(0,0,0,.87);
+}
+caption {
+    font-size: 12px;
+    font-size: .7rem;
+    color: rgba(0,0,0,.54);
+}
+button {
+    font-weight: 500;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-size: 14px;
+    font-size: .8rem;
+    color: rgba(0,0,0,.87);
+    text-transform: uppercase;
+}
+nav {
+    background-color: #009688;
+    color: #000;
+    text-transform: uppercase;
+}
+i {
+    color: #fff;
+    padding: 0 5px;
+}
+img { display: block; }
+
+section {
+    height: 1000px;
+    padding-top: 100px;
+    padding-bottom: 100px;   
+}
+a { color: #ff6e40; }
+/* 2. Typography 
+-------------------------------------------------*/
+
+.primary-color { color: #009688; }
+
+.primary-color100 { color: #b2dfdb; } 
+
+.primary-color700 { color: #00796b; }
+
+.accent-color { color: #ff6e40; }
+
+.accent-100 { color: #ff9e80; }
+
+.accent-400 { color: #FF3D00; }
+
+.base-black { color: #000; }
+
+.text-primary-black {
+    color: #000;
+    opacity: .87;
+}
+.secondary-text-black {
+    color: #000;
+    opacity: .54;
+}
+.disabled-text-black {
+    color: #000;
+    opacity: .38;
+}
+.dividers-black {
+    color: #000;
+    opacity: .12;
+}
+.base-white { color: #fff; }
+
+.text-primary-white { color: #fff; }
+
+.secondary-text-white {
+    color: #fff;
+    opacity: .70;
+}
+.disabled-text-white {
+    color: #fff;
+    opacity: .30;
+}
+.dividers-white {
+    color: #000;
+    opacity: .12;
+}
+/* 3. Button
+-------------------------------------------------*/
+
+.btn {
+    min-width: 64px;
+    min-height: 36px;
+    padding: 0 8px;
+    margin: 8px;
+    border: 0 none;
+    background-color: #ff6e40;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);    
+    border-radius: none;
+    letter-spacing: 1px;
+    border-radius: 0;       
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus {
+    outline: 0 none;
+    box-shadow: 0 0 8px rgba(0,0,0,.18), 0 8px 16px rgba(0,0,0,.36);
+}
+.btn-primary {
+    background: #ff6e40;
+    color: #ffffff;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+    background: #ff3d00;
+}
+.btn-primary:active,
+.btn-primary.active {
+    background: #ff6e40;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+}
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.open>.dropdown-toggle.btn-primary.focus,
+.open>.dropdown-toggle.btn-primary:focus,
+.open>.dropdown-toggle.btn-primary:hover {
+    background: #ff6e40;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+}
+/* Calculator 
+---------------------------------------*/
+
+
+/* 5. Footer
+---------------------------------------*/
+
+footer { background-color: #fafafa; }
+footer .container { padding: 16px; }
+
+footer ul { padding-left: 0; }
+
+footer ul li {
+    float: left;
+    display: block;
+    margin-right: 10px;
+        list-style: none;
+}
+footer ul li a:active,
+footer ul li a:hover {
+    color: #ff3d00;
+}
+.footer-top-section { height: 25px; }
+.footer-bottom-section {
+    margin-top: 10px;
+    margin-top: .714rem;
+}
+
+/* Sticky footer styles - Bootstrap example
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 100px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 100px;
+  background-color: #f5f5f5;
+}
+
+/* 7. Media Queries
+------------------------------ */
+
