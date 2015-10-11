@@ -1,13 +1,54 @@
 ﻿var calcModule = (function () {
 
     var calcVariables = [];
-
+    
+    function add(num) {
+       return function(num2) {
+            return num + num2;
+       }
+    }
+    
+    function subtract(num) {
+         return function(num2) {
+              return num - num2;
+         }
+    }
+    
+    function multiply(num) {
+         return function(num2) {
+              return num * num2;
+         }
+    }
+    
+    function divide(num) {
+         return function(num2) {
+              return num / num2;
+         }
+    }
+    
+    function modulo(num) {
+       return function(num2) {
+            return num%num2;
+       }
+    }
+    
     function handleInput(str) {
         var updateStr = '';
-        var isStrNum = !isNaN(str);
+        var isStrNum = !isNaN(+str);
+        
         if (isStrNum) {
-            calcVariables.push(+str);
-            return updateStr = calcVariables.join("");
+            if (calcVariables.length < 17) {
+                if(calcVariables.length > 0){
+                   if(typeof calcVariables[0] === "function") {
+                       calcVariables[0] = calcVariables[0](+str);
+                   } else {
+                       calcVariables[0] = calcVariables[0] + str;
+                   }                  
+                } else {
+                   calcVariables.push(str);
+                }             
+            }           
+            return calcVariables.join("");
         }
 
         if (str === "C") {
@@ -34,11 +75,11 @@
                     console.log(calcVariables);
                     return calcVariables.join("");
                 }
-                var calcVariable = calcVariables[calcVariables.length - 1];
-                var isNum = isNaN(+calcVariable);
-                if (!isNum) {
-                    calcVariables.push(str);
-                    return calcVariable + str;
+                var calcVariable = calcVariables.join("");
+                var isNum = !isNaN(+calcVariable);
+                if (isNum) {
+                    calcVariables[0] = calcVariables.join("") + str;
+                    return calcVariables.join("");
                 } else {
                     calcVariables.push("0" + str);
                     return "0" + str;
@@ -48,6 +89,10 @@
                 return "0" + str;
             }
 
+        } else if (str === "+") {
+            var currValue = +calcVariables.join("");
+            calcVariables[0] = add(currValue);
+            return currValue;
         }
 
         return updateStr;
