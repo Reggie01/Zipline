@@ -1,110 +1,80 @@
 ﻿var calcModule = (function () {
 
     var calcVariables = [];
-    
-    function add(num) {
-       return function(num2) {
-            return num + num2;
-       }
-    }
-    
-    function subtract(num) {
-         return function(num2) {
-              return num - num2;
-         }
-    }
-    
-    function multiply(num) {
-         return function(num2) {
-              return num * num2;
-         }
-    }
-    
-    function divide(num) {
-         return function(num2) {
-              return num / num2;
-         }
-    }
-    
-    function modulo(num) {
-       return function(num2) {
-            return num%num2;
-       }
-    }
-    
+    var acc = [];
+    var keywords = "c ce";
+   
+    // TODO: Allow user to build double number before addtion.
     function handleInput(str) {
-        var updateStr = '';
-        var isStrNum = !isNaN(+str);
-        
-        if (isStrNum) {
-            if (calcVariables.length < 17) {
-                if(calcVariables.length > 0){
-                   if(typeof calcVariables[0] === "function") {
-                       calcVariables[0] = calcVariables[0](+str);
-                   } else {
-                       calcVariables[0] = calcVariables[0] + str;
-                   }                  
-                } else {
-                   calcVariables.push(str);
-                }             
-            }           
-            return calcVariables.join("");
-        }
-
-        if (str === "C") {
-            calcVariables = [];
-            return "0";
-        } else if (str === "CE") {
-            if (calcVariables.length > 0) {
-                if(!isNaN(+calcVariables.join(""))){
-                     calcVariables = [];
-                     return "0";
-                }
-                var re = /\+\-|\/|\*/g;
-                if( re.test( calcVariables.join("") ) ) {
-                     updateStr = calcVariables.join("");
-                }
-                
-            } else {
-                return "0";
-            }
-        } else if (str === ".") {
-            console.log(calcVariables.length);
-            if (calcVariables.length > 0) {
-                if (calcVariables.join("").indexOf(".") !== -1) {
-                    console.log(calcVariables);
-                    return calcVariables.join("");
-                }
-                var calcVariable = calcVariables.join("");
-                var isNum = !isNaN(+calcVariable);
-                if (isNum) {
-                    calcVariables[0] = calcVariables.join("") + str;
-                    return calcVariables.join("");
-                } else {
-                    calcVariables.push("0" + str);
-                    return "0" + str;
-                }
-            } else {
-                calcVariables.push("0.");
-                return "0" + str;
-            }
-
-        } else if (str === "+") {
-            var currValue = +calcVariables.join("");
-            calcVariables[0] = add(currValue);
-            return currValue;
-        }
-
-        return updateStr;
+        var processedString = processString(str); 
+        return processedString;         
     }
+    function createTokens(){
+         var variablesForTokenizer =  calcVariables.join(",").replace(/,/g,"").split(" ");
+         console.log(variablesForTokenizer);
+         return variablesForTokenizer.map(function(val){
+              if(is_whitespace(val)) {
+                   return "";
+              }
+              if(is_int(val)){
+                   return {
+                        type: "int",
+                        val: +val
+                   }
+              }
+              if(is_float(val)){
+                   return {
+                        type: "float",
+                        val: parseFloat(val)
+                   }
+              }
+              if(is_op(val)){
+                   return {
+                        type: "op",
+                        val: val
+                   }
+              }
+              if(is_keyword(val)){
+                   return {
+                        type:"keyword",
+                        val: val
+                   }
+              }
+         });
+    }
+    function is_whitespace(str){
+        return / /.test(str);
+    }    
+    
+    function is_keyword(str) {
+        return /c|ce/.test(str);
+    }
+    
+    function is_int(str){
+         return /[0-9]+/.test(str);
+    }   
+    
+    function is_float(str){
+         return /[0-9]+.[0-9]+/.test(str);
+    }
+    
+    function is_op(str) {
+         return /[/*\-x+=]/.test(str);
+    }
+     
+    function processString(str) {
+         var re = /[/*\-x+=]|CE|C|ce|c/;
+         return re.test(str) ? calcVariables.push(" " + str + " ") : calcVariables.push(str)
+    }    
 
     function getCalcVariables() {
-        return calcVariables;
+        return calcVariables.join(",").replace(/,/g, "");
     }
 
     return {
         handleInput : handleInput,
-        getCalcVariables : getCalcVariables
+        getCalcVariables : getCalcVariables,
+        createTokens: createTokens
     }
 }
     ());
@@ -115,14 +85,21 @@ $(document).ready(function () {
     input$.val("0");
 
     $(".calc-wrapper").on("click", "button", function (e) {
-
+        var newStr,
         str = e.target.innerText;
-        console.log(str);
-        console.log(calcModule.getCalcVariables());
-
-        var newStr = calcModule.handleInput(str);
-
-        console.log(calcModule.getCalcVariables());
+        console.log("Str: "  + str);
+        if(str.toLowerCase() === "x") {
+         console.log("hello");
+            newStr = calcModule.handleInput("*");
+        } else {
+             newStr = calcModule.handleInput(str.toLowerCase());
+        }
+         
+        if(str === "=") {
+             console.log(calcModule.getCalcVariables());
+             console.log(calcModule.createTokens());
+        }
+               
         input$.val(newStr);
     })
 });
