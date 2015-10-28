@@ -1,4 +1,40 @@
-﻿var calcModule = (function () {
+﻿var re = /[\d.]+|[()+\-*/=]/g;
+
+token_map = {
+  "+": "ADD",
+  "-": "ADD",
+  "*": "MUL",
+  "/": "MUL",
+  "(": "LPAR",
+  ")": "RPAR"
+}
+
+function Token(name, val) {
+    this.name = name;
+    this.val = val;
+}
+
+function split_exprToToken(re, tok_map, expr) {
+   return expr.match(re)
+       .map(function(elm) {
+           return tok_map[elm] === undefined ? new Token("NUM", elm) : new Token(tok_map[elm], elm);
+   });
+}
+
+function inputString(str, re, tokMap) {
+     str.match
+}
+
+function InputStream(input) {
+ return {
+      eof: eof
+ }
+ function eof() {
+      return arr.length == num;
+ }
+}
+
+var calcModule = (function () {
 
     var calcVariables = [];
     var acc = [];
