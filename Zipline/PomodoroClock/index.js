@@ -101,7 +101,10 @@ $( document ).ready( function () {
     var amtToFill = 0;
 
     var context = canvas.getContext( "2d" );
-
+    var ctxTextWidth = context.measureText(isBreakOrSession).width;
+    var ctxTimeTxtWidth;
+    var ctxTimeTxt;
+    
     function drawCanvasClock() {
         context.clearRect( 0, 0, canvasWidth, canvasHeight );
         context.save();
@@ -118,13 +121,16 @@ $( document ).ready( function () {
         context.font = "30px sans-serif";
         context.font = 'italic 30pt Roboto';
         context.fillStyle = "rgba(0,0,0,0.54)";
-        context.fillText( isBreakOrSession, centerX - 55, centerY - radius * 0.5 );
+        ctxTextWidth = context.measureText(isBreakOrSession).width;
+        context.fillText(isBreakOrSession, (canvasWidth- ctxTextWidth)/2, centerY - radius * 0.5);
 
         context.beginPath();
         //context.font = "30px sans-serif";
         context.font = "30pt Roboto";
         context.fillStyle = "rgba(0,0,0,0.54)";
-        context.fillText( canvasMinutes + " : " + addZeros(canvasSeconds), centerX - 55, centerY + radius * 0.5 );
+        ctxTimeTxt = canvasMinutes + " : " + addZeros(canvasSeconds);
+        ctxTimeTxtWidth = context.measureText(ctxTimeTxt).width;
+        context.fillText( ctxTimeTxt, (canvasWidth - ctxTimeTxtWidth)/ 2, centerY + radius * 0.5 );
 
         context.restore();
         context.beginPath();
@@ -242,7 +248,7 @@ $( document ).ready( function () {
         if(Array.prototype.slice.call(arguments).length > 1) {
              var args = Array.prototype.slice.call(arguments);
              var elems = args.slice(1);
-
+             
              elems.forEach(function(elem){
                   elem.prop(propArr[0], propArr[1]);
              })
