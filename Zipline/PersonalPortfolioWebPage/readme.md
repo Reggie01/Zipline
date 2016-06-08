@@ -1,7 +1,6 @@
 ﻿#Readme
 
-This is FreeCodeCamp front end development project "[personal portfolio webpage](https://www.freecodecamp.com/challenges/build-a-personal-portfolio-webpage)". Follow the link
-to see all user stories for the [project](https://www.freecodecamp.com/challenges/build-a-personal-portfolio-webpage).
+This is FreeCodeCamp front end development project "[personal portfolio webpage](https://www.freecodecamp.com/challenges/build-a-personal-portfolio-webpage)". 
 You can view the project on [codepen](http://codepen.io/Reggie01/full/qdzZxb/).
 
 ### User Stories
