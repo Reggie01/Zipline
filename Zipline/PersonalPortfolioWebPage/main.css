@@ -303,6 +303,17 @@ a {
   text-align: center;
 }
 
+.card-image {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}
+
+.card-image:hover .overlay {
+  width: 100%;
+}
+
 .card-image img {
   width: 150px;
   height: 150px;
@@ -312,7 +323,7 @@ a {
 .card-title-container {
   padding: 24px 16px;
   margin: 0;
-  height: 72px;
+  /* height: 72px; */
 }
 
 .card-title {
@@ -325,6 +336,35 @@ a {
   font-size: 14px;
   font-size: .8rem;
 }
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 0;
+  transition: .5s ease;
+  background-color: #ff6e40;
+}
+
+.text {
+  white-space: nowrap;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+  -ms-transform: translate( -50%, -50% );
+}
+
+.text a {
+  color: white;
+}
+
 /* 8. Contact
 ----------------------------------------*/
 
